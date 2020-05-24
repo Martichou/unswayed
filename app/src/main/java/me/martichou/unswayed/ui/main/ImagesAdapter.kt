@@ -60,9 +60,12 @@ class ImagesAdapter : ListAdapter<ImageObject, RecyclerView.ViewHolder>(ImagesDi
 
     class ViewHolderSep(private val binding: RvSeparatorBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @OptIn(ExperimentalStdlibApi::class)
         fun bind(item: ImageObject) {
             binding.apply {
-                separatorDate.text = SimpleDateFormat("EE d MMM y", Locale.getDefault()).format(item.imgDate)
+                separatorDate.text =
+                    SimpleDateFormat("EE d MMM y", Locale.getDefault()).format(item.imgDate)
+                        .capitalize(Locale.getDefault())
                 executePendingBindings()
             }
         }
