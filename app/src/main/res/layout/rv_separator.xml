@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="day. 00 month. 0000"
+        android:textColor="@color/textPrimary"
         android:padding="16dp"
         tools:text="Ven. 25 oct. 2019"
         tools:ignore="ContentDescription" />
