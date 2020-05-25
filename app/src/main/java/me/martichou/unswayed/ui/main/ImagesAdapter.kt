@@ -2,6 +2,8 @@ package me.martichou.unswayed.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.text.PrecomputedTextCompat
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -59,9 +61,13 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DateItem) {
             binding.apply {
-                separatorDate.text =
-                    SimpleDateFormat("EE d MMM y", Locale.getDefault()).format(item.date)
-                        .capitalize(Locale.getDefault())
+                separatorDate.setTextFuture(
+                    PrecomputedTextCompat.getTextFuture(
+                        SimpleDateFormat("EE d MMM y", Locale.getDefault()).format(item.date)
+                            .capitalize(Locale.getDefault()),
+                        TextViewCompat.getTextMetricsParams(binding.separatorDate), null
+                    )
+                )
                 executePendingBindings()
             }
         }
