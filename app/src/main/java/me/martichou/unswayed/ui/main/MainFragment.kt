@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import me.martichou.unswayed.databinding.MainFragmentBinding
-import me.martichou.unswayed.models.ImageObject
+import me.martichou.unswayed.models.*
 import timber.log.Timber
 import java.util.*
 
@@ -34,7 +34,6 @@ class MainFragment : Fragment() {
             }
         }
         binding.mainRecyclerview.layoutManager = gridLayoutManager
-
         return binding.root
     }
 
@@ -48,8 +47,8 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    private fun getAllImages(): MutableList<ImageObject> {
-        val listOfAllImages: MutableList<ImageObject> = mutableListOf()
+    private fun getAllImages(): MutableList<GeneralItem> {
+        val listOfAllImages: MutableList<GeneralItem> = mutableListOf()
         val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val query: Cursor? = context?.contentResolver?.query(
             uriExternal,
@@ -67,43 +66,30 @@ class MainFragment : Fragment() {
             while (cursor.moveToNext()) {
                 val date = Date(cursor.getLong(columnDateID) * 1000)
                 listOfAllImages.add(
-                    ImageObject(
-                        Uri.withAppendedPath(
-                            uriExternal,
-                            "" + cursor.getLong(columnIndexID)
-                        ),
-                        date,
-                        false
+                    ImageItem(
+                        Uri.withAppendedPath(uriExternal, "" + cursor.getLong(columnIndexID)),
+                        date
                     )
                 )
             }
+            // Now adding the date separator
             var index = -1
             while (++index < listOfAllImages.size) {
                 if (index == 0) {
-                    listOfAllImages.add(0,
-                        ImageObject(
-                            null,
-                            listOfAllImages[0].imgDate,
-                            true
-                        )
-                    )
+                    listOfAllImages.add(0, DateItem((listOfAllImages[0] as ImageItem).imgDate))
                 } else {
-                    val prevImg = listOfAllImages[index - 1]
+                    val prevItem = listOfAllImages[index - 1]
+                    if (prevItem is ImageItem) {
+                        val date = (listOfAllImages[index] as ImageItem).imgDate
+                        cal1.time = date
+                        cal2.time = prevItem.imgDate
 
-                    cal1.time = listOfAllImages[index].imgDate
-                    cal2.time = prevImg.imgDate
+                        val sameDay = cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
+                                cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
 
-                    val sameDay = cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
-                            cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
-
-                    if (!sameDay) {
-                        listOfAllImages.add(index,
-                            ImageObject(
-                                null,
-                                listOfAllImages[index].imgDate,
-                                true
-                            )
-                        )
+                        if (!sameDay) {
+                            listOfAllImages.add(index, DateItem(date))
+                        }
                     }
                 }
             }
