@@ -2,4 +2,6 @@
 <resources>
     <color name="textPrimary">#FFFFFF</color>
     <color name="textSecondary">#CCCCCC</color>
+    <color name="backgroundColor">#000000</color>
+    <color name="lightshadow">#303030</color>
 </resources>

@@ -6,7 +6,7 @@
         android:id="@+id/separatorDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textColor="@color/textPrimary"
         android:padding="16dp"
         tools:text="Ven. 25 oct. 2019"

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Unswayed</string>
+    <string name="app_name_styled"><b>Un</b>swayed</string>
 </resources>
