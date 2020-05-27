@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.PrecomputedTextCompat
 import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,5 +72,26 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
                 executePendingBindings()
             }
         }
+    }
+}
+
+class ImagesDiff : DiffUtil.ItemCallback<GeneralItem>() {
+
+    override fun areItemsTheSame(oldItem: GeneralItem, newItem: GeneralItem): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: GeneralItem, newItem: GeneralItem): Boolean {
+        return if (oldItem.type != newItem.type ||
+            ((oldItem is DateItem && newItem is ImageItem) ||
+                    (oldItem is ImageItem && newItem is DateItem))
+        )
+            false
+        else if (oldItem is ImageItem && newItem is ImageItem)
+            oldItem.imgUri == newItem.imgUri
+        else if (oldItem is DateItem && newItem is DateItem)
+            oldItem.date == newItem.date
+        else
+            false
     }
 }
