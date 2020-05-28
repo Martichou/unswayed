@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textColor="@color/textPrimary"
-        android:textSize="12sp"
+        android:textSize="14sp"
         tools:ignore="ContentDescription"
         tools:text="Ven. 25 oct. 2019" />
 </layout>

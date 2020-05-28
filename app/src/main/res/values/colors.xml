@@ -13,6 +13,7 @@
 
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#3A3A3A</color>
+    <color name="transpPrimary">#59000000</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="lightshadow">#6C6C6C</color>
 </resources>
