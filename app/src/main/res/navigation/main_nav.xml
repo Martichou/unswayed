@@ -8,5 +8,11 @@
         android:id="@+id/main_fragment"
         android:name="me.martichou.unswayed.ui.main.MainFragment"
         android:label="Home"
-        tools:layout="@layout/main_fragment"/>
+        tools:layout="@layout/main_fragment" />
+
+    <fragment
+        android:id="@+id/folder_fragment"
+        android:name="me.martichou.unswayed.ui.folder.FolderFragment"
+        android:label="Folder"
+        tools:layout="@layout/folder_fragment" />
 </navigation>

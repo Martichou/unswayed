@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import me.martichou.unswayed.R
-import me.martichou.unswayed.databinding.RvItemsBinding
-import me.martichou.unswayed.databinding.RvSeparatorBinding
+import me.martichou.unswayed.databinding.MainRvPhotoBinding
+import me.martichou.unswayed.databinding.MainRvSeparatorBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
@@ -31,10 +31,10 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> ViewHolder(
-                RvItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MainRvPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             else -> ViewHolderSeparator(
-                RvSeparatorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MainRvSeparatorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
         }
     }
@@ -43,7 +43,8 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
         return getItem(position).type
     }
 
-    class ViewHolder(private val binding: RvItemsBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: MainRvPhotoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ImageItem) {
             binding.apply {
                 Glide.with(binding.imageView)
@@ -58,7 +59,7 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
     }
 
     @ExperimentalStdlibApi
-    class ViewHolderSeparator(private val binding: RvSeparatorBinding) :
+    class ViewHolderSeparator(private val binding: MainRvSeparatorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DateItem) {
             binding.apply {

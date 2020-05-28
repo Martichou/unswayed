@@ -9,6 +9,7 @@
     <color name="dark">#303030</color>
     <color name="white">#FFFFFF</color>
     <color name="beige">#CCCCCC</color>
+    <color name="tint">#8FB4EB</color>
 
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#3A3A3A</color>

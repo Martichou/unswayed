@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/main_fragment"
+        android:icon="@drawable/ic_photo_24"
+        android:orderInCategory="1"
+        android:title="Photos"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/folder_fragment"
+        android:icon="@drawable/ic_folder_24"
+        android:orderInCategory="2"
+        android:title="Collection"
+        app:showAsAction="always" />
+
+</menu>

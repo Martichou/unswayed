@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import me.martichou.unswayed.databinding.MainFragmentBinding
-import me.martichou.unswayed.models.*
-import timber.log.Timber
+import me.martichou.unswayed.models.DateItem
+import me.martichou.unswayed.models.GeneralItem
+import me.martichou.unswayed.models.ImageItem
 import java.util.*
 
 class MainFragment : Fragment() {
