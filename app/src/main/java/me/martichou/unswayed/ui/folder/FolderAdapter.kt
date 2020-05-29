@@ -8,24 +8,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.martichou.unswayed.R
-import me.martichou.unswayed.database.AppDatabase
-import me.martichou.unswayed.database.BackedFolderDao
 import me.martichou.unswayed.databinding.FolderRvItemBinding
-import me.martichou.unswayed.models.BackedFolder
 import me.martichou.unswayed.models.FolderItem
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FolderAdapter(private val db: AppDatabase) : ListAdapter<FolderItem, FolderAdapter.ViewHolder>(FolderDiff()) {
+class FolderAdapter : ListAdapter<FolderItem, FolderAdapter.ViewHolder>(FolderDiff()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), db.backedFolderDao())
+        holder.bind(getItem(position))
     }
 
     @ExperimentalStdlibApi
@@ -41,7 +33,7 @@ class FolderAdapter(private val db: AppDatabase) : ListAdapter<FolderItem, Folde
 
     class ViewHolder(private val binding: FolderRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FolderItem, dao: BackedFolderDao) {
+        fun bind(item: FolderItem) {
             binding.apply {
                 folderName.setTextFuture(
                     PrecomputedTextCompat.getTextFuture(
@@ -55,11 +47,6 @@ class FolderAdapter(private val db: AppDatabase) : ListAdapter<FolderItem, Folde
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.folderImage)
-                binding.addToBackup.setOnClickListener {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        dao.insertBackedFolder(BackedFolder(item.folderName, item.folderId))
-                    }
-                }
                 executePendingBindings()
             }
         }

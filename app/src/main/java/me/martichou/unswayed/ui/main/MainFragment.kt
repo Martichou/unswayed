@@ -2,7 +2,6 @@ package me.martichou.unswayed.ui.main
 
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -11,12 +10,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import me.martichou.unswayed.database.AppDatabase
 import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
-import timber.log.Timber
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -29,7 +26,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this, MainVMFactory(AppDatabase.getDatabase(requireContext()))).get(MainViewModel::class.java)
         binding = MainFragmentBinding.inflate(inflater, container, false)
         binding.mainRecyclerview.adapter = adapter
         val gridLayoutManager = GridLayoutManager(context, 4)
@@ -44,68 +40,62 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeUi()
+        adapter.submitList(getAllImages())
     }
 
-    private fun subscribeUi() {
-        viewModel.foldersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
-            if (list.isEmpty()) {
-                return@Observer
-            }
-            val listOfAllImages: MutableList<GeneralItem> = mutableListOf()
-            val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                MediaStore.Images.Media.BUCKET_ID + " IN (${list.joinToString { "${it.folderId}" }})"
-            } else {
-                "bucket_id IN (${list.joinToString { "${it.folderId}" }})"
-            }
-            val query: Cursor? = context?.contentResolver?.query(
-                uriExternal,
-                arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_MODIFIED),
-                selection,
-                null,
-                MediaStore.Images.ImageColumns.DATE_MODIFIED + " DESC"
-            )
-            query?.let { cursor ->
-                val colIndexID: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-                val colDateID: Int =
-                    cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)
-                while (cursor.moveToNext()) {
-                    listOfAllImages.add(
-                        ImageItem(
-                            Uri.withAppendedPath(uriExternal, "" + cursor.getLong(colIndexID)),
-                            Date(cursor.getLong(colDateID) * 1000)
-                        )
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    private fun getAllImages(): MutableList<GeneralItem> {
+        val listOfAllImages: MutableList<GeneralItem> = mutableListOf()
+        val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val query: Cursor? = context?.contentResolver?.query(
+            uriExternal,
+            arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_MODIFIED),
+            null,
+            null,
+            MediaStore.Images.ImageColumns.DATE_MODIFIED + " DESC"
+        )
+        query?.let { cursor ->
+            val columnIndexID: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            val columnDateID: Int =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)
+            while (cursor.moveToNext()) {
+                listOfAllImages.add(
+                    ImageItem(
+                        Uri.withAppendedPath(uriExternal, "" + cursor.getLong(columnIndexID)),
+                        Date(cursor.getLong(columnDateID) * 1000)
                     )
-                }
-                // Now adding the date separator
-                var index = -1
-                val cal1 = Calendar.getInstance()
-                val cal2 = Calendar.getInstance()
-                while (++index < listOfAllImages.size) {
-                    if (index == 0) {
-                        listOfAllImages.add(0, DateItem((listOfAllImages[0] as ImageItem).imgDate))
-                    } else {
-                        val prevItem = listOfAllImages[index - 1]
-                        if (prevItem is ImageItem) {
-                            val date = (listOfAllImages[index] as ImageItem).imgDate
-                            cal1.time = date
-                            cal2.time = prevItem.imgDate
+                )
+            }
+            // Now adding the date separator
+            var index = -1
+            val cal1 = Calendar.getInstance()
+            val cal2 = Calendar.getInstance()
+            while (++index < listOfAllImages.size) {
+                if (index == 0) {
+                    listOfAllImages.add(0, DateItem((listOfAllImages[0] as ImageItem).imgDate))
+                } else {
+                    val prevItem = listOfAllImages[index - 1]
+                    if (prevItem is ImageItem) {
+                        val date = (listOfAllImages[index] as ImageItem).imgDate
+                        cal1.time = date
+                        cal2.time = prevItem.imgDate
 
-                            val sameDay =
-                                cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
-                                        cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
+                        val sameDay = cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
+                                cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
 
-                            if (!sameDay) {
-                                listOfAllImages.add(index, DateItem(date))
-                            }
+                        if (!sameDay) {
+                            listOfAllImages.add(index, DateItem(date))
                         }
                     }
                 }
             }
-            query?.close()
-            adapter.submitList(listOfAllImages)
-        })
+        }
+        query?.close()
+        return listOfAllImages
     }
 
 }
