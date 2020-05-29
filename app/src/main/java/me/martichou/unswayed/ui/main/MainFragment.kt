@@ -62,19 +62,18 @@ class MainFragment : Fragment() {
             val columnIndexID: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             val columnDateID: Int =
                 cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)
-            val cal1 = Calendar.getInstance()
-            val cal2 = Calendar.getInstance()
             while (cursor.moveToNext()) {
-                val date = Date(cursor.getLong(columnDateID) * 1000)
                 listOfAllImages.add(
                     ImageItem(
                         Uri.withAppendedPath(uriExternal, "" + cursor.getLong(columnIndexID)),
-                        date
+                        Date(cursor.getLong(columnDateID) * 1000)
                     )
                 )
             }
             // Now adding the date separator
             var index = -1
+            val cal1 = Calendar.getInstance()
+            val cal2 = Calendar.getInstance()
             while (++index < listOfAllImages.size) {
                 if (index == 0) {
                     listOfAllImages.add(0, DateItem((listOfAllImages[0] as ImageItem).imgDate))
