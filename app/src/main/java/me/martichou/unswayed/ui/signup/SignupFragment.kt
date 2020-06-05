@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import me.martichou.unswayed.MainActivity
-import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.SignupFragmentBinding
 
 class SignupFragment : Fragment() {
@@ -30,10 +28,6 @@ class SignupFragment : Fragment() {
         startActivity(Intent(context, MainActivity::class.java)).apply {
             activity?.finish()
         }
-    }
-
-    fun gotoSignin(view: View) {
-        findNavController().popBackStack()
     }
 
 }

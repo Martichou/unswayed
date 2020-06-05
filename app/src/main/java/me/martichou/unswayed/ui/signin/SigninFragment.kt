@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import me.martichou.unswayed.MainActivity
-import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.SigninFragmentBinding
-import timber.log.Timber
 
 class SigninFragment : Fragment() {
 
@@ -31,11 +28,6 @@ class SigninFragment : Fragment() {
         startActivity(Intent(context, MainActivity::class.java)).apply {
             activity?.finish()
         }
-    }
-
-    fun gotoSignup(view: View) {
-        Timber.d("Clicked")
-        findNavController().navigate(R.id.signup_fragment)
     }
 
 }
