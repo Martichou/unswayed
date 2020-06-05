@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/backgroundColor"
         android:padding="16dp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,7 +23,7 @@
             android:letterSpacing="0.05"
             android:text="Sign up"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/textPrimary"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@id/username_text_input"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,11 +37,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:hint="Email"
-            android:textColorHint="@color/white"
-            app:boxStrokeColor="@color/white"
+            android:textColorHint="@color/textPrimary"
+            app:boxStrokeColor="@color/textPrimary"
             app:layout_constraintBottom_toTopOf="@id/password_text_input"
             app:startIconDrawable="@drawable/ic_baseline_person_24"
-            app:startIconTint="@color/white">
+            app:startIconTint="@color/textPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_value"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="@color/white" />
+                android:textColor="@color/textPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,13 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:hint="Password"
-            android:textColorHint="@color/white"
-            app:boxStrokeColor="@color/white"
+            android:textColorHint="@color/textPrimary"
+            app:boxStrokeColor="@color/textPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_baseline_lock_24"
-            app:startIconTint="@color/white">
+            app:startIconTint="@color/textPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_value"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:textColor="@color/white" />
+                android:textColor="@color/textPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +106,7 @@
             android:padding="12dp"
             android:text="Sign Up"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/textPrimary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progressBar" />
