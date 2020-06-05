@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/signin_fragment"
-        android:icon="@drawable/ic_photo_24"
+        android:icon="@drawable/ic_signin"
         android:orderInCategory="1"
         android:title="Sign In"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/signup_fragment"
-        android:icon="@drawable/ic_folder_24"
+        android:icon="@drawable/ic_signup"
         android:orderInCategory="2"
         android:title="Sign Up"
         app:showAsAction="always" />
