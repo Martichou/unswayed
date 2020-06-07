@@ -20,7 +20,6 @@ class AuthActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         binding = DataBindingUtil.setContentView(this, R.layout.auth_activity)
         navController = Navigation.findNavController(this, R.id.auth_nav)
-        binding.bottomNav.setupWithNavController(navController)
     }
 
 }

@@ -1,7 +1,5 @@
 package me.martichou.unswayed.ui.folder
 
-import android.content.Context
-import android.content.res.Resources
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -13,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.martichou.unswayed.databinding.FolderFragmentBinding
 import me.martichou.unswayed.models.FolderItem
@@ -21,23 +20,28 @@ class FolderFragment : Fragment() {
 
     private lateinit var binding: FolderFragmentBinding
     private lateinit var viewModel: FolderViewModel
-    private val adapter = FolderAdapter()
+    private val folderAdapter = FolderAdapter()
+    private val albumAdapter = AlbumAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FolderFragmentBinding.inflate(inflater, container, false)
-        binding.folderRecyclerview.adapter = adapter
+        binding.folderRecyclerview.adapter = folderAdapter
         binding.folderRecyclerview.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.folderRecyclerview.addItemDecoration(SpacingDecorator(toDP(8f).toInt()))
+
+        binding.albumRecyclerview.adapter = albumAdapter
+        binding.albumRecyclerview.layoutManager = GridLayoutManager(context, 2)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.submitList(getAllFolders())
+        folderAdapter.submitList(getAllFolders())
+        albumAdapter.submitList(getAllFolders())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
