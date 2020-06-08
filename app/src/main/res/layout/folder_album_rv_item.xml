@@ -7,40 +7,28 @@
         android:id="@+id/extern_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_margin="16dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/wrapper"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/albumImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="8dp"
+            android:layout_height="175dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/albumImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/placeholder" />
-
-        </androidx.cardview.widget.CardView>
+            tools:src="@drawable/placeholder" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/albumName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:textColor="@color/textPrimary"
-            android:textStyle="bold"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/wrapper"
-            tools:text="Screenshots"/>
+            app:layout_constraintTop_toBottomOf="@id/albumImage"
+            tools:text="Screenshots" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

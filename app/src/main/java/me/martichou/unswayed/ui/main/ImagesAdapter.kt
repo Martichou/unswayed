@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.MainRvPhotoBinding
 import me.martichou.unswayed.databinding.MainRvSeparatorBinding
@@ -49,6 +50,7 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
             binding.apply {
                 Glide.with(binding.imageView)
                     .load(item.imgUri)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .override(binding.imageView.width, binding.imageView.height)
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)

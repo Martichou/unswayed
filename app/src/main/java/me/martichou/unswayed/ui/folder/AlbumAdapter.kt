@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.FolderAlbumRvItemBinding
 import me.martichou.unswayed.models.FolderItem
@@ -39,9 +44,14 @@ class AlbumAdapter : ListAdapter<FolderItem, AlbumAdapter.ViewHolder>(AlbumDiff(
                         TextViewCompat.getTextMetricsParams(binding.albumName), null
                     )
                 )
+
                 Glide.with(this.albumImage)
                     .load(item.lastImgUri)
-                    .override(binding.albumImage.width, binding.albumImage.height)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .override(binding.albumImage.measuredWidth, binding.albumImage.measuredHeight)
+                    .transform(
+                        MultiTransformation(CenterCrop(), RoundedCorners(16))
+                    )
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.albumImage)

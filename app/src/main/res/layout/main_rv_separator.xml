@@ -6,11 +6,12 @@
         android:id="@+id/separatorDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
         android:textColor="@color/textPrimary"
         android:textSize="14sp"
         tools:ignore="ContentDescription"
         tools:text="Ven. 25 oct. 2019" />
+
 </layout>
