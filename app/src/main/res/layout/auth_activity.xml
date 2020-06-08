@@ -3,58 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".AuthActivity">
 
-        <LinearLayout
-            android:id="@+id/title_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/auth_nav">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/signIn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginEnd="16dp"
-                android:text="SIGN IN"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textPrimary"
-                android:textSize="22sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/signUp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginStart="16dp"
-                android:text="SIGN UP"
-                android:textAlignment="textStart"
-                android:textColor="@color/textPrimary"
-                android:textSize="22sp" />
-
-        </LinearLayout>
-
         <fragment
             android:id="@+id/auth_nav"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_wrapper"
             app:navGraph="@navigation/auth_nav" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>
