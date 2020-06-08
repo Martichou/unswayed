@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/main_fragment"
-        android:icon="@drawable/ic_photo_24"
+        android:icon="@drawable/ic_bnv_photo_selector"
         android:orderInCategory="1"
         android:title="Photos"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/folder_fragment"
-        android:icon="@drawable/ic_folder_24"
+        android:icon="@drawable/ic_bnv_album_selector"
         android:orderInCategory="2"
         android:title="Collection"
         app:showAsAction="always" />

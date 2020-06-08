@@ -3,6 +3,7 @@
     <color name="textPrimary">#FFFFFF</color>
     <color name="textSecondary">#CCCCCC</color>
     <color name="backgroundColor">#000000</color>
+    <color name="floatingBgColor">#292929</color>
     <color name="lightshadow">#303030</color>
     <color name="transpPrimary">#59000000</color>
 

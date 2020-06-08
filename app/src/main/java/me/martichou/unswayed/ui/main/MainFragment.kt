@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,12 +30,12 @@ class MainFragment : Fragment() {
         binding = MainFragmentBinding.inflate(inflater, container, false)
         binding.mainRecyclerview.adapter = adapter
         val gridLayoutManager = GridLayoutManager(context, 4)
-        gridLayoutManager.reverseLayout = true
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter.getItemViewType(position) == 1) 1 else 4
             }
         }
+        binding.mainRecyclerview.addItemDecoration(SpacingDecorator(toDP(2f).toInt()))
         binding.mainRecyclerview.layoutManager = gridLayoutManager
         return binding.root
     }
@@ -72,28 +73,39 @@ class MainFragment : Fragment() {
                 )
             }
             // Now adding the date separator
-            var index = 0
+            var index = -1
             var date: Date
             val cal1 = Calendar.getInstance()
             val cal2 = Calendar.getInstance()
             while (++index < listOfAllImages.size) {
-                val prevItem = listOfAllImages[index - 1]
-                if (prevItem is ImageItem) {
-                    date = (listOfAllImages[index] as ImageItem).imgDate
-                    cal1.time = date
-                    cal2.time = prevItem.imgDate
+                if (index == 0) {
+                    listOfAllImages.add(0, DateItem((listOfAllImages[0] as ImageItem).imgDate))
+                } else {
+                    val prevItem = listOfAllImages[index - 1]
+                    if (prevItem is ImageItem) {
+                        date = (listOfAllImages[index] as ImageItem).imgDate
+                        cal1.time = date
+                        cal2.time = prevItem.imgDate
 
-                    val sameDay = cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
-                            cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
+                        val sameDay = cal1[Calendar.DAY_OF_YEAR] == cal2[Calendar.DAY_OF_YEAR] &&
+                                cal1[Calendar.YEAR] == cal2[Calendar.YEAR]
 
-                    if (!sameDay) {
-                        listOfAllImages.add(index, DateItem(prevItem.imgDate))
+                        if (!sameDay) {
+                            listOfAllImages.add(index, DateItem(prevItem.imgDate))
+                        }
                     }
                 }
             }
         }
         query?.close()
         return listOfAllImages
+    }
+
+    private fun toDP(value: Float): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, value,
+            resources.displayMetrics
+        )
     }
 
 }

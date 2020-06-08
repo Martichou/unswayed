@@ -11,7 +11,7 @@ class SplashActivity : AppCompatActivity() {
 
     private val mRunnable = {
         if (!isFinishing) {
-            val intent = Intent(this, AuthActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivityForResult(intent, 0).also {
                 finish()
             }
