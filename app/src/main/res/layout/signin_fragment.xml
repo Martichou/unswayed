@@ -133,6 +133,7 @@
             android:foreground="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{hdl::gotoSignup}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/vguideline"
             app:layout_constraintBottom_toBottomOf="parent"

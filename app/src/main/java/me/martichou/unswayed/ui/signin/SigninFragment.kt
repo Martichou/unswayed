@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import me.martichou.unswayed.MainActivity
 import me.martichou.unswayed.databinding.SigninFragmentBinding
 
@@ -21,6 +22,11 @@ class SigninFragment : Fragment() {
         binding = SigninFragmentBinding.inflate(inflater, container, false)
         binding.hdl = this
         return binding.root
+    }
+
+    fun gotoSignup(view: View) {
+        // TODO - will need to check more for that
+        findNavController().navigate(SigninFragmentDirections.gotoSignup())
     }
 
     fun performSignin(view: View) {
