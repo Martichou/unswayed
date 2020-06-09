@@ -3,6 +3,7 @@ package me.martichou.unswayed.ui.main
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.TypedValue
 import android.view.*
@@ -18,6 +19,8 @@ import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
+import timber.log.Timber
+import java.io.File
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -66,7 +69,7 @@ class MainFragment : Fragment() {
 
         val callback = object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                mode?.menuInflater?.inflate(R.menu.navigation, menu)
+                mode?.menuInflater?.inflate(R.menu.contextual_main, menu)
                 return true
             }
 
@@ -83,7 +86,15 @@ class MainFragment : Fragment() {
                         true
                     }
                     R.id.delete -> {
-                        // Handle delete from cloud and device
+                        mtracker.selection.reversed().forEach {
+                            Timber.d("Idk $it")
+                            adapter.getItemAt(it.toInt())?.let { img ->
+                                Timber.d("Idk 2 $it")
+                                img.imgUri?.let {
+                                    // USE SAF?
+                                }
+                            }
+                        }
                         true
                     }
                     else -> false
