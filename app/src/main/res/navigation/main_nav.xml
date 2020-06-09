@@ -15,4 +15,9 @@
         android:name="me.martichou.unswayed.ui.folder.FolderFragment"
         android:label="Folder"
         tools:layout="@layout/folder_fragment" />
+
+    <dialog
+        android:id="@+id/profileSettings"
+        android:name="me.martichou.unswayed.ui.dialog.SettingsPopup"
+        tools:layout="@layout/settings_dialog"/>
 </navigation>

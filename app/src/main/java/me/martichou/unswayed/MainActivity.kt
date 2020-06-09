@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
         navController = Navigation.findNavController(this, R.id.main_nav)
         binding.bottomNav.setupWithNavController(navController)
+        binding.profileImage.setOnClickListener {
+            navController.navigate(R.id.profileSettings)
+        }
     }
 
     override fun onStart() {

@@ -39,4 +39,13 @@
         <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
     </style>
 
+    <style name="SettingsPopup" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+    <style name="MyRipple">
+        <item name="colorControlHighlight">@color/lightlightshadow</item>
+    </style>
+
 </resources>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded"
+        android:paddingTop="4dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/closing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            android:tint="@color/textSecondary"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackground"
+            android:theme="@style/MyRipple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/trademark"
+            app:layout_constraintBottom_toBottomOf="@id/trademark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/trademark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/app_name_styled"
+            android:textColor="@color/textPrimary"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profilePic"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trademark" />
+
+        <LinearLayout
+            android:id="@+id/profileInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/profilePic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/profilePic"
+            app:layout_constraintTop_toTopOf="@id/profilePic">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing=".05"
+                android:text="Martin André"
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
+                tools:text="Martin André" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing=".05"
+                android:text="m@rtin.fyi"
+                android:textColor="@color/textSecondary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                tools:text="m@rtin.fyi" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/fiv"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightlightshadow"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/profilePic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackground"
+            android:theme="@style/MyRipple"
+            app:layout_constraintTop_toBottomOf="@id/fiv">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="8dp"
+                android:padding="16dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/ic_outline_settings_24"
+                android:tint="@color/textSecondary"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings of Unswayed Photos"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
