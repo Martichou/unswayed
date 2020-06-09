@@ -5,12 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
@@ -28,7 +29,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = MainFragmentBinding.inflate(inflater, container, false)
-        binding.mainRecyclerview.adapter = adapter
+        binding.mainRecyclerview.adapter = adapter.apply { setHasStableIds(true) }
         val gridLayoutManager = GridLayoutManager(context, 4)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -48,6 +49,44 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        val callback = object : ActionMode.Callback {
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                mode?.menuInflater?.inflate(R.menu.navigation, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                return when (item?.itemId) {
+                    R.id.share -> {
+                        // Share...
+                        true
+                    }
+                    R.id.dustbin -> {
+                        // Move to dustbin and delete from device if it was backed up
+                        // Else simply delete from device with a warning
+                        true
+                    }
+                    R.id.delete -> {
+                        // Handle delete from cloud and device
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+            }
+        }
+
+        (activity as AppCompatActivity).startSupportActionMode(callback).apply {
+            this?.title = "1"
+        }
     }
 
     private fun getAllImages(): MutableList<GeneralItem> {

@@ -17,6 +17,8 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
     </style>
 
     <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">

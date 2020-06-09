@@ -17,6 +17,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">

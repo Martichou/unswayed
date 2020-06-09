@@ -44,6 +44,10 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
         return getItem(position).type
     }
 
+    override fun getItemId(position: Int): Long {
+        return super.getItemId(position)
+    }
+
     class ViewHolder(private val binding: MainRvPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ImageItem) {
