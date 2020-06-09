@@ -3,17 +3,17 @@ package me.martichou.unswayed.ui.main
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.TypedValue
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.selection.*
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
@@ -21,7 +21,6 @@ import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
 import me.martichou.unswayed.utils.toDP
 import timber.log.Timber
-import java.io.File
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -50,7 +49,7 @@ class MainFragment : Fragment() {
             "mySelection",
             binding.mainRecyclerview,
             StableIdKeyProvider(binding.mainRecyclerview),
-            MyItemDetailsLookup(binding.mainRecyclerview),
+            MainItemDetailsLookup(binding.mainRecyclerview),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -179,23 +178,5 @@ class MainFragment : Fragment() {
         }
         query?.close()
         return listOfAllImages
-    }
-
-}
-
-class MyItemDetailsLookup(private val recyclerView: RecyclerView) :
-    ItemDetailsLookup<Long>() {
-    override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
-        val view = recyclerView.findChildViewUnder(event.x, event.y)
-        if (view != null) {
-            val vh = recyclerView.getChildViewHolder(view)
-            // Workaround for now, will need to find a way to avoid user selecting viewType 2
-            return if (vh is ImagesAdapter.ViewHolder) {
-                vh.getItemDetails()
-            } else {
-                null
-            }
-        }
-        return null
     }
 }
