@@ -3,7 +3,6 @@ package me.martichou.unswayed.ui.main
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import timber.log.Timber
 
 class SpacingDecorator(private val space: Int) : RecyclerView.ItemDecoration() {
 

@@ -51,7 +51,7 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
                 Glide.with(binding.imageView)
                     .load(item.imgUri)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .override(binding.imageView.width, binding.imageView.height)
+                    .override(binding.imageView.measuredWidth, binding.imageView.measuredHeight)
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.imageView)

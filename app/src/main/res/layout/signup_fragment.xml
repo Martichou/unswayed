@@ -18,20 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/tint"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/hguideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/hguideline">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
                 android:padding="32dp"
                 android:text="Sign Up"
-                android:textSize="26sp"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_gravity="start|bottom"/>
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
 
@@ -55,10 +55,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/hguideline"
             app:layout_constraintBottom_toTopOf="@id/signUpButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/hguideline">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/info"
@@ -120,39 +120,39 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:background="@color/lightshadow"
-            app:layout_constraintTop_toTopOf="@id/signInButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/signInButton" />
 
         <LinearLayout
             android:id="@+id/signInButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:gravity="center"
-            android:foreground="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:onClick="@{hdl::gotoSignin}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/vguideline"
+            android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toStartOf="@id/vguideline"
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textSecondary"
                 android:text="Already have an account?"
-                android:textSize="14sp"/>
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/tint"
                 android:text="SIGN IN"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:textColor="@color/tint"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -160,17 +160,17 @@
             android:id="@+id/signUpButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="center"
             android:background="@color/tint"
-            android:foreground="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:onClick="@{hdl::performSignup}"
-            app:layout_constraintStart_toEndOf="@id/vguideline"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/signInButton"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vguideline"
+            app:layout_constraintTop_toTopOf="@id/signInButton">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -178,10 +178,10 @@
                 android:drawableEnd="@drawable/ic_baseline_arrow_right_alt_24"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/white"
-                android:textColor="@color/white"
                 android:text="SIGN UP"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

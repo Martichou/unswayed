@@ -12,8 +12,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.FolderRvItemBinding
 import me.martichou.unswayed.models.FolderItem
-import java.text.SimpleDateFormat
-import java.util.*
 
 class FolderAdapter : ListAdapter<FolderItem, FolderAdapter.ViewHolder>(FolderDiff()) {
 
@@ -45,7 +43,7 @@ class FolderAdapter : ListAdapter<FolderItem, FolderAdapter.ViewHolder>(FolderDi
                 Glide.with(this.folderImage)
                     .load(item.lastImgUri)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .override(binding.folderImage.width, binding.folderImage.height)
+                    .override(binding.folderImage.measuredWidth, binding.folderImage.measuredHeight)
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.folderImage)
