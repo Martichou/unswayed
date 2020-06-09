@@ -3,6 +3,8 @@ package me.martichou.unswayed.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
+import androidx.core.graphics.scaleMatrix
 import androidx.core.text.PrecomputedTextCompat
 import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
@@ -70,10 +72,20 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
                     .error(R.drawable.placeholder)
                     .into(binding.imageView)
                 if (isActivated) {
-                    binding.imageView.setPadding(32)
+                    binding.imageView.animate().apply {
+                        scaleX(0.65f)
+                        scaleY(0.65f)
+                        duration = 175
+                        start()
+                    }
                     binding.selectorIndicator.visibility = View.VISIBLE
                 } else {
-                    binding.imageView.setPadding(0)
+                    binding.imageView.animate().apply {
+                        scaleX(1f)
+                        scaleY(1f)
+                        duration = 175
+                        start()
+                    }
                     binding.selectorIndicator.visibility = View.GONE
                 }
                 executePendingBindings()
