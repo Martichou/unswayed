@@ -19,6 +19,7 @@ import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
+import me.martichou.unswayed.utils.toDP
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -43,7 +44,7 @@ class MainFragment : Fragment() {
                 return if (adapter.getItemViewType(position) == 1) 1 else 4
             }
         }
-        binding.mainRecyclerview.addItemDecoration(SpacingDecorator(toDP(2f).toInt()))
+        binding.mainRecyclerview.addItemDecoration(SpacingDecorator(toDP(2f, resources).toInt()))
         binding.mainRecyclerview.layoutManager = gridLayoutManager
         mtracker = SelectionTracker.Builder(
             "mySelection",
@@ -178,13 +179,6 @@ class MainFragment : Fragment() {
         }
         query?.close()
         return listOfAllImages
-    }
-
-    private fun toDP(value: Float): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, value,
-            resources.displayMetrics
-        )
     }
 
 }

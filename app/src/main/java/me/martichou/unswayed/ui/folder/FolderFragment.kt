@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.martichou.unswayed.databinding.FolderFragmentBinding
 import me.martichou.unswayed.models.FolderItem
+import me.martichou.unswayed.utils.toDP
 
 class FolderFragment : Fragment() {
 
@@ -31,7 +32,7 @@ class FolderFragment : Fragment() {
         binding.folderRecyclerview.adapter = folderAdapter
         binding.folderRecyclerview.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.folderRecyclerview.addItemDecoration(SpacingDecorator(toDP(8f).toInt()))
+        binding.folderRecyclerview.addItemDecoration(SpacingDecorator(toDP(8f, resources).toInt()))
 
         binding.albumRecyclerview.adapter = albumAdapter
         binding.albumRecyclerview.layoutManager = GridLayoutManager(context, 2)
@@ -85,13 +86,6 @@ class FolderFragment : Fragment() {
         }
         query?.close()
         return listOfAllFolder
-    }
-
-    private fun toDP(value: Float): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, value,
-            resources.displayMetrics
-        )
     }
 
 }
