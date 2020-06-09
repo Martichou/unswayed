@@ -18,6 +18,7 @@
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/floatingBgColor</item>
         <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
     </style>
 
@@ -31,6 +32,11 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Base.Widget.AppCompat.ActionMode" parent="">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
     </style>
 
 </resources>
