@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
@@ -22,6 +24,8 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: MainFragmentBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var mtracker: SelectionTracker<Long>
+    private var actionMode: ActionMode? = null
     private val adapter = ImagesAdapter()
 
     override fun onCreateView(
@@ -29,7 +33,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = MainFragmentBinding.inflate(inflater, container, false)
-        binding.mainRecyclerview.adapter = adapter.apply { setHasStableIds(true) }
+        binding.mainRecyclerview.adapter = adapter
         val gridLayoutManager = GridLayoutManager(context, 4)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -38,6 +42,16 @@ class MainFragment : Fragment() {
         }
         binding.mainRecyclerview.addItemDecoration(SpacingDecorator(toDP(2f).toInt()))
         binding.mainRecyclerview.layoutManager = gridLayoutManager
+        mtracker = SelectionTracker.Builder(
+            "mySelection",
+            binding.mainRecyclerview,
+            StableIdKeyProvider(binding.mainRecyclerview),
+            MyItemDetailsLookup(binding.mainRecyclerview),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+        adapter.tracker = mtracker
         return binding.root
     }
 
@@ -51,16 +65,12 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         val callback = object : ActionMode.Callback {
-
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                 mode?.menuInflater?.inflate(R.menu.navigation, menu)
                 return true
             }
 
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                return false
-            }
-
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                 return when (item?.itemId) {
                     R.id.share -> {
@@ -81,12 +91,31 @@ class MainFragment : Fragment() {
             }
 
             override fun onDestroyActionMode(mode: ActionMode?) {
+                actionMode = null
+                mtracker.clearSelection()
             }
         }
 
-        (activity as AppCompatActivity).startSupportActionMode(callback).apply {
-            this?.title = "1"
-        }
+        mtracker.addObserver(
+            object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    super.onSelectionChanged()
+                    val items = mtracker.selection!!.size()
+                    if (items > 0) {
+                        if (actionMode == null) {
+                            actionMode =
+                                (activity as AppCompatActivity).startSupportActionMode(callback)
+                                    .apply {
+                                        this?.title = items.toString()
+                                    }
+                        } else {
+                            actionMode?.title = items.toString()
+                        }
+                    } else {
+                        actionMode?.finish()
+                    }
+                }
+            })
     }
 
     private fun getAllImages(): MutableList<GeneralItem> {
@@ -147,4 +176,21 @@ class MainFragment : Fragment() {
         )
     }
 
+}
+
+class MyItemDetailsLookup(private val recyclerView: RecyclerView) :
+    ItemDetailsLookup<Long>() {
+    override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
+        val view = recyclerView.findChildViewUnder(event.x, event.y)
+        if (view != null) {
+            val vh = recyclerView.getChildViewHolder(view)
+            // Workaround for now, will need to find a way to avoid user selecting viewType 2
+            return if (vh is ImagesAdapter.ViewHolder) {
+                vh.getItemDetails()
+            } else {
+                null
+            }
+        }
+        return null
+    }
 }

@@ -1,9 +1,13 @@
 package me.martichou.unswayed.ui.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.PrecomputedTextCompat
+import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +24,20 @@ import java.util.*
 
 class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDiff()) {
 
+    var tracker: SelectionTracker<Long>? = null
+
+    init {
+        setHasStableIds(true)
+    }
+
     @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ViewHolder)
-            holder.bind(getItem(position) as ImageItem)
-        else if (holder is ViewHolderSeparator)
-            holder.bind(getItem(position) as DateItem)
+        tracker?.let {
+            if (holder is ViewHolder)
+                holder.bind(getItem(position) as ImageItem, it.isSelected(position.toLong()))
+            else if (holder is ViewHolderSeparator)
+                holder.bind(getItem(position) as DateItem)
+        }
     }
 
     @ExperimentalStdlibApi
@@ -44,13 +56,11 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
         return getItem(position).type
     }
 
-    override fun getItemId(position: Int): Long {
-        return super.getItemId(position)
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
     class ViewHolder(private val binding: MainRvPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ImageItem) {
+        fun bind(item: ImageItem, isActivated: Boolean = false) {
             binding.apply {
                 Glide.with(binding.imageView)
                     .load(item.imgUri)
@@ -59,9 +69,22 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.imageView)
+                if (isActivated) {
+                    binding.imageView.setPadding(32)
+                    binding.selectorIndicator.visibility = View.VISIBLE
+                } else {
+                    binding.imageView.setPadding(0)
+                    binding.selectorIndicator.visibility = View.GONE
+                }
                 executePendingBindings()
             }
         }
+
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+            object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getPosition(): Int = adapterPosition
+                override fun getSelectionKey(): Long? = itemId
+            }
     }
 
     @ExperimentalStdlibApi
