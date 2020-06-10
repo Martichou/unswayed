@@ -23,7 +23,7 @@
 
     <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@drawable/splashscreen</item>
+        <item name="android:windowBackground">@drawable/splashscreen_black</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">false</item>
