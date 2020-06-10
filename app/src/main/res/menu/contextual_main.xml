@@ -10,15 +10,22 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/download"
+        android:icon="@drawable/ic_baseline_save_alt_24"
+        android:orderInCategory="2"
+        android:title="Download"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/dustbin"
         android:icon="@drawable/ic_baseline_delete_24"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:title="Dustbin"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/delete"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="Delete from device"
         app:showAsAction="never" />
 

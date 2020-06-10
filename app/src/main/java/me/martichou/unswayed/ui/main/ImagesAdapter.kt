@@ -3,10 +3,7 @@ package me.martichou.unswayed.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
-import androidx.core.graphics.scaleMatrix
 import androidx.core.text.PrecomputedTextCompat
-import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
@@ -34,12 +31,12 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
 
     @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        tracker?.let {
-            if (holder is ViewHolder)
+        if (holder is ViewHolder) {
+            tracker?.let {
                 holder.bind(getItem(position) as ImageItem, it.isSelected(position.toLong()))
-            else if (holder is ViewHolderSeparator)
-                holder.bind(getItem(position) as DateItem)
-        }
+            }
+        } else if (holder is ViewHolderSeparator)
+            holder.bind(getItem(position) as DateItem)
     }
 
     @ExperimentalStdlibApi
@@ -61,8 +58,9 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
     override fun getItemId(position: Int): Long = position.toLong()
 
     fun getItemAt(position: Int): ImageItem? {
-        return if (getItemViewType(position) == 1) {
-            getItem(position) as ImageItem
+        val item = getItem(position)
+        return if (item.type == 1) {
+            item as ImageItem
         } else {
             null
         }
@@ -79,6 +77,7 @@ class ImagesAdapter : ListAdapter<GeneralItem, RecyclerView.ViewHolder>(ImagesDi
                     .thumbnail(0.1f)
                     .error(R.drawable.placeholder)
                     .into(binding.imageView)
+                // Selection style
                 if (isActivated) {
                     binding.imageView.animate().apply {
                         scaleX(0.65f)

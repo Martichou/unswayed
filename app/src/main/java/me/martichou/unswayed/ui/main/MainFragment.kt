@@ -1,5 +1,6 @@
 package me.martichou.unswayed.ui.main
 
+import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -20,8 +21,8 @@ import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
 import me.martichou.unswayed.utils.toDP
-import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
 
@@ -78,6 +79,21 @@ class MainFragment : Fragment() {
                 return when (item?.itemId) {
                     R.id.share -> {
                         // Share...
+                        // TODO - Using idk which trick to download then use the uri of the downloaded image
+                        startActivity(Intent.createChooser(Intent().apply {
+                            action = Intent.ACTION_SEND_MULTIPLE
+                            putParcelableArrayListExtra(
+                                Intent.EXTRA_STREAM,
+                                ArrayList(mtracker.selection.mapNotNull { adapter.getItemAt(it.toInt())?.imgUri })
+                            )
+                            // All type cause it's possible we endup with video as well
+                            type = "*/*"
+                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        }, "Share"))
+                        true
+                    }
+                    R.id.download -> {
+                        // Download to local storage
                         true
                     }
                     R.id.dustbin -> {
@@ -87,11 +103,10 @@ class MainFragment : Fragment() {
                     }
                     R.id.delete -> {
                         mtracker.selection.reversed().forEach {
-                            Timber.d("Idk $it")
                             adapter.getItemAt(it.toInt())?.let { img ->
-                                Timber.d("Idk 2 $it")
                                 img.imgUri?.let {
-                                    // USE SAF?
+                                    // DELETE FROM REMOTE FIRST
+                                    // DELETE FROM THE DEVICE SECOND (SAF > API29)
                                 }
                             }
                         }
@@ -111,14 +126,12 @@ class MainFragment : Fragment() {
             object : SelectionTracker.SelectionObserver<Long>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
-                    val items = mtracker.selection!!.size()
+                    val items = mtracker.selection.size()
                     if (items > 0) {
                         if (actionMode == null) {
                             actionMode =
                                 (activity as AppCompatActivity).startSupportActionMode(callback)
-                                    .apply {
-                                        this?.title = items.toString()
-                                    }
+                                    .apply { this?.title = items.toString() }
                         } else {
                             actionMode?.title = items.toString()
                         }
