@@ -40,8 +40,9 @@ class FolderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        folderAdapter.submitList(getAllFolders())
-        albumAdapter.submitList(getAllFolders())
+        val folders = getAllFolders()
+        folderAdapter.submitList(folders)
+        albumAdapter.submitList(folders)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
