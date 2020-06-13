@@ -6,7 +6,7 @@
 
         <variable
             name="hdl"
-            type="me.martichou.unswayed.ui.signin.SigninFragment" />
+            type="me.martichou.unswayed.ui.signin.SigninTwoFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,30 +29,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Connection"
+            android:text="Welcome"
             android:textSize="24sp"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/logo"
             app:layout_constraintStart_toStartOf="@id/logo"
             app:layout_constraintEnd_toEndOf="@id/logo"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/who"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/conn"
+            app:layout_constraintStart_toStartOf="@id/conn"
+            app:layout_constraintEnd_toEndOf="@id/conn"/>
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_ti"
+            android:id="@+id/password_ti"
             android:theme="@style/TextInputLayoutAppearance"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:hint="Email address"
+            android:hint="Entrer your password"
             android:textColorHint="@color/lightshadow"
             app:hintTextColor="@color/tint"
             app:boxStrokeColor="@color/tint"
-            app:layout_constraintTop_toBottomOf="@id/conn"
+            app:layout_constraintTop_toBottomOf="@id/who"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_value"
+                android:id="@+id/password_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -66,19 +76,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="Create an account"
+            android:text="Forgot your password?"
             android:textColor="@color/tint"
-            app:layout_constraintTop_toBottomOf="@id/email_ti"
+            app:layout_constraintTop_toBottomOf="@id/password_ti"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:text="Next"
+            android:text="Connect"
             android:textColor="@color/white"
             android:backgroundTint="@color/tint"
-            android:onClick="@{hdl::gotoNext}"
+            android:onClick="@{hdl::connect}"
             app:cornerRadius="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

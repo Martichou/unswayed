@@ -18,21 +18,22 @@
             app:popExitAnim="@anim/nav_default_exit_none_anim"
             app:popUpTo="@id/signin_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/gotoNext"
+            app:destination="@id/signin_two_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
-        android:id="@+id/signup_fragment"
-        android:name="me.martichou.unswayed.ui.signup.SignupFragment"
-        tools:layout="@layout/signup_fragment">
-        <action
-            android:id="@+id/gotoSignin"
-            app:destination="@id/signin_fragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_none_anim"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_exit_none_anim"
-            app:popUpTo="@id/signup_fragment"
-            app:popUpToInclusive="true" />
+        android:id="@+id/signin_two_fragment"
+        android:name="me.martichou.unswayed.ui.signin.SigninTwoFragment"
+        tools:layout="@layout/signin_two_fragment">
+        <argument
+            android:name="email"
+            app:argType="string"/>
     </fragment>
 
 </navigation>

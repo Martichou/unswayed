@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Unswayed" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -46,6 +46,28 @@
 
     <style name="MyRipple">
         <item name="colorControlHighlight">@color/lightlightshadow</item>
+    </style>
+
+    <style name="AuthScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teel_200</item>
+        <item name="colorSecondaryVariant">@color/teel_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorAccent">@color/tint</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlActivated">@color/tint</item>
     </style>
 
 </resources>

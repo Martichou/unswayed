@@ -29,6 +29,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AuthActivity"
+            android:theme="@style/AuthScreen"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

@@ -1,14 +1,13 @@
 package me.martichou.unswayed.ui.signin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import me.martichou.unswayed.MainActivity
 import me.martichou.unswayed.databinding.SigninFragmentBinding
+import me.martichou.unswayed.utils.isEmailValid
 
 class SigninFragment : Fragment() {
 
@@ -24,16 +23,17 @@ class SigninFragment : Fragment() {
         return binding.root
     }
 
-    fun gotoSignup(view: View) {
+    fun gotoNext(view: View) {
         // TODO - will need to check more for that
-        findNavController().navigate(SigninFragmentDirections.gotoSignup())
-    }
 
-    fun performSignin(view: View) {
-        // TODO - it's a placeholder for now
-        startActivity(Intent(context, MainActivity::class.java)).apply {
-            activity?.finish()
+        // Get the email value and validate it using a regex
+        val email = binding.emailValue.text.toString()
+        if (!isEmailValid(email)) {
+            binding.emailValue.error = "Invalid email format"
+            return
         }
+
+        findNavController().navigate(SigninFragmentDirections.gotoNext(email))
     }
 
 }
