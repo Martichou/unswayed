@@ -24,15 +24,12 @@ class SigninFragment : Fragment() {
     }
 
     fun gotoNext(view: View) {
-        // TODO - will need to check more for that
-
         // Get the email value and validate it using a regex
         val email = binding.emailValue.text.toString()
         if (!isEmailValid(email)) {
             binding.emailValue.error = "Invalid email format"
             return
         }
-
         findNavController().navigate(SigninFragmentDirections.gotoNext(email))
     }
 
