@@ -31,9 +31,8 @@ class SigninTwoFragment : Fragment() {
     var call: Call<AccessToken>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        service = RetrofitBuilder().createService(ApiService::class.java)
-        tokenManager =
-            TokenManager.getInstance(requireContext().getSharedPreferences("prefs", MODE_PRIVATE))
+        service = RetrofitBuilder.createService(ApiService::class.java)
+        tokenManager = TokenManager.getInstance(requireContext().getSharedPreferences("prefs", MODE_PRIVATE))
         super.onCreate(savedInstanceState)
     }
 
@@ -72,10 +71,11 @@ class SigninTwoFragment : Fragment() {
                     response.body()?.let {
                         tokenManager.saveToken(it)
                     }
+
                     // Continue
-                    startActivity(Intent(context, MainActivity::class.java)).apply {
-                        activity?.finish()
-                    }
+                    // startActivity(Intent(context, MainActivity::class.java)).apply {
+                    //    activity?.finish()
+                    // }
                 } else {
                     if (response.code() == 401) {
                         binding.passwordValue.error = "Wrong password"

@@ -8,9 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
-class RetrofitBuilder {
-
-    private val baseURL = "http://192.168.1.27:8080/"
+object RetrofitBuilder {
 
     private val client = buildClient()
     private val retrofit = buildRetrofit(client)
@@ -33,7 +31,7 @@ class RetrofitBuilder {
 
     private fun buildRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseURL)
+            .baseUrl("http://192.168.1.27:8080/")
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
