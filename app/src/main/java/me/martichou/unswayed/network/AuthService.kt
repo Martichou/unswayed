@@ -2,13 +2,17 @@ package me.martichou.unswayed.network
 
 import me.martichou.unswayed.models.AccessToken
 import me.martichou.unswayed.models.LoginData
+import me.martichou.unswayed.models.RefreshData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ApiService {
+interface AuthService {
 
     @POST("auth")
-    fun auth(@Body body: LoginData): Call<AccessToken>
+    suspend fun auth(@Body body: LoginData): AccessToken
+
+    @POST("refresh")
+    fun refresh(@Body body: RefreshData): AccessToken
 
 }

@@ -6,32 +6,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import me.martichou.unswayed.MainActivity
 import me.martichou.unswayed.databinding.SigninTwoFragmentBinding
-import me.martichou.unswayed.models.AccessToken
 import me.martichou.unswayed.models.LoginData
-import me.martichou.unswayed.network.ApiService
 import me.martichou.unswayed.network.RetrofitBuilder
+import me.martichou.unswayed.utils.Status
 import me.martichou.unswayed.utils.TokenManager
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
-
 
 class SigninTwoFragment : Fragment() {
 
     private lateinit var binding: SigninTwoFragmentBinding
-    private lateinit var service: ApiService
+    private lateinit var viewModel: AuthViewModel
     private lateinit var tokenManager: TokenManager
 
     private var email: String? = null
-    var call: Call<AccessToken>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        service = RetrofitBuilder.createService(ApiService::class.java)
         tokenManager = TokenManager.getInstance(requireContext().getSharedPreferences("prefs", MODE_PRIVATE))
         super.onCreate(savedInstanceState)
     }
@@ -52,44 +47,37 @@ class SigninTwoFragment : Fragment() {
         return binding.root
     }
 
-    fun connect(view: View) {
-        // Send email and password (plain text over HTTPS) and await for the return
-        // Send using post with payload as {email: value, password: value}
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, AuthVMFactory(RetrofitBuilder.authService)).get(AuthViewModel::class.java)
+    }
+
+    fun View.connect() {
         if (binding.passwordValue.text.isNullOrEmpty()) {
             binding.passwordValue.error = "Cannot be blank"
             return
         }
-        call = service.auth(LoginData(email!!, binding.passwordValue.text.toString()))
-        // Make the call
-        call!!.enqueue(object : Callback<AccessToken> {
-            override fun onResponse(
-                call: Call<AccessToken>,
-                response: Response<AccessToken>
-            ) {
-                if (response.isSuccessful) {
-                    // Save the response (token_type, access_token, refresh_token, expire_at) somewhere safe
-                    response.body()?.let {
-                        tokenManager.saveToken(it)
-                    }
+        viewModel.perform(LoginData(email!!, binding.passwordValue.text.toString())).observe(this@SigninTwoFragment, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        resource.data?.let { accessToken ->
+                            tokenManager.saveToken(accessToken)
+                            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
-                    // Continue
-                    // startActivity(Intent(context, MainActivity::class.java)).apply {
-                    //    activity?.finish()
-                    // }
-                } else {
-                    if (response.code() == 401) {
-                        binding.passwordValue.error = "Wrong password"
+                            startActivity(Intent(context, MainActivity::class.java)).apply {
+                                activity?.finish()
+                            }
+                        }
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+                        Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-
-            override fun onFailure(
-                call: Call<AccessToken?>?,
-                t: Throwable
-            ) {
-                Timber.e(t)
-            }
         })
     }
-
 }

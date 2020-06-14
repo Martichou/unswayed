@@ -58,6 +58,7 @@ dependencies {
     implementation('androidx.lifecycle:lifecycle-extensions:2.2.0')
     implementation('androidx.lifecycle:lifecycle-common-java8:2.2.0')
     implementation('androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0')
+    implementation('androidx.lifecycle:lifecycle-livedata-ktx:2.2.0')
 
     // Custom
     implementation('com.jakewharton.timber:timber:4.7.1')

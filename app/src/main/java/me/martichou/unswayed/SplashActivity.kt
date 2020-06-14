@@ -14,12 +14,11 @@ class SplashActivity : AppCompatActivity() {
 
     private val mRunnable = {
         if (!isFinishing) {
-            var intent = if (tokenManager.token.accessToken != null) {
+            val intent = if (tokenManager.token.accessToken != null) {
                 Intent(this, MainActivity::class.java)
             } else {
                 Intent(this, AuthActivity::class.java)
             }
-            intent = Intent(this, AuthActivity::class.java)
             startActivityForResult(intent, 0).also {
                 finish()
             }

@@ -23,7 +23,7 @@ class SigninFragment : Fragment() {
         return binding.root
     }
 
-    fun gotoNext(view: View) {
+    fun View.gotoNext() {
         // Get the email value and validate it using a regex
         val email = binding.emailValue.text.toString()
         if (!isEmailValid(email)) {
