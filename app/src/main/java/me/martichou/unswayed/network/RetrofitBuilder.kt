@@ -20,7 +20,7 @@ object RetrofitBuilder {
     }
 
     private fun getRetrofitAuth(tokenManager: TokenManager): Retrofit {
-        val tokenValue = tokenManager.token.accessToken
+        val tokenValue = tokenManager.token?.accessToken
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 var request: Request = chain.request()
@@ -30,7 +30,7 @@ object RetrofitBuilder {
                     request = builder.build()
                 }
                 chain.proceed(request)
-            }.authenticator(Authenticator(tokenManager)).build()
+            }.authenticator(Authenticator.getInstance(tokenManager)).build()
 
         return Retrofit.Builder()
             .baseUrl("http://192.168.1.27:8080/")
