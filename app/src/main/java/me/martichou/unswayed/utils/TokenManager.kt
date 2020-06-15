@@ -28,7 +28,8 @@ class TokenManager private constructor(private val prefs: SharedPreferences) {
                 tokenType = prefs.getInt("TOKEN_TYPE", -1),
                 accessToken = prefs.getString("ACCESS_TOKEN", null),
                 refreshToken = prefs.getString("REFRESH_TOKEN", null),
-                expireAt = prefs.getString("EXPIRE_AT", null))
+                expireAt = prefs.getString("EXPIRE_AT", null)
+            )
         }
 
     companion object {

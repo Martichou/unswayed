@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import me.martichou.unswayed.models.LoginData
 import me.martichou.unswayed.network.AuthService
 import me.martichou.unswayed.utils.Resource
-import java.lang.Exception
 
 class AuthViewModel(private val authService: AuthService) : ViewModel() {
 

@@ -27,7 +27,8 @@ class SigninTwoFragment : Fragment() {
     private var email: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        tokenManager = TokenManager.getInstance(requireContext().getSharedPreferences("prefs", MODE_PRIVATE))
+        tokenManager =
+            TokenManager.getInstance(requireContext().getSharedPreferences("prefs", MODE_PRIVATE))
         super.onCreate(savedInstanceState)
     }
 
@@ -49,7 +50,8 @@ class SigninTwoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, AuthVMFactory(RetrofitBuilder.authService)).get(AuthViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, AuthVMFactory(RetrofitBuilder.authService))
+            .get(AuthViewModel::class.java)
     }
 
     fun View.connect() {
@@ -57,27 +59,28 @@ class SigninTwoFragment : Fragment() {
             binding.passwordValue.error = "Cannot be blank"
             return
         }
-        viewModel.perform(LoginData(email!!, binding.passwordValue.text.toString())).observe(this@SigninTwoFragment, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        resource.data?.let { accessToken ->
-                            tokenManager.saveToken(accessToken)
-                            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+        viewModel.perform(LoginData(email!!, binding.passwordValue.text.toString()))
+            .observe(this@SigninTwoFragment, Observer {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            resource.data?.let { accessToken ->
+                                tokenManager.saveToken(accessToken)
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
-                            startActivity(Intent(context, MainActivity::class.java)).apply {
-                                activity?.finish()
+                                startActivity(Intent(context, MainActivity::class.java)).apply {
+                                    activity?.finish()
+                                }
                             }
                         }
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                    }
-                    Status.LOADING -> {
-                        Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                        Status.ERROR -> {
+                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        Status.LOADING -> {
+                            Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 }

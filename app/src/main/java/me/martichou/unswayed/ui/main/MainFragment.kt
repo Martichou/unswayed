@@ -1,6 +1,5 @@
 package me.martichou.unswayed.ui.main
 
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -21,10 +20,7 @@ import me.martichou.unswayed.databinding.MainFragmentBinding
 import me.martichou.unswayed.models.DateItem
 import me.martichou.unswayed.models.GeneralItem
 import me.martichou.unswayed.models.ImageItem
-import me.martichou.unswayed.network.RetrofitBuilder
-import me.martichou.unswayed.utils.TokenManager
 import me.martichou.unswayed.utils.toDP
-import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 

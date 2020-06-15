@@ -22,9 +22,9 @@
             android:id="@+id/gotoNext"
             app:destination="@id/signin_two_fragment"
             app:enterAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -33,7 +33,7 @@
         tools:layout="@layout/signin_two_fragment">
         <argument
             android:name="email"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 
 </navigation>

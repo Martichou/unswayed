@@ -15,7 +15,7 @@ object RetrofitBuilder {
             .build()
     }
 
-    val authService : AuthService by lazy {
+    val authService: AuthService by lazy {
         return@lazy getRetrofit().create(AuthService::class.java)
     }
 
@@ -30,13 +30,16 @@ object RetrofitBuilder {
                     request = builder.build()
                 }
                 chain.proceed(request)
-            }.build()
-        // TODO - Add authenticator the the client
+            }.authenticator(Authenticator(tokenManager)).build()
 
         return Retrofit.Builder()
             .baseUrl("http://192.168.1.27:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
+    }
+
+    fun restrictedService(tokenManager: TokenManager) : RestrictedService {
+        return getRetrofitAuth(tokenManager).create(RestrictedService::class.java)
     }
 }

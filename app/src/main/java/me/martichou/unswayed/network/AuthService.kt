@@ -13,6 +13,6 @@ interface AuthService {
     suspend fun auth(@Body body: LoginData): AccessToken
 
     @POST("refresh")
-    fun refresh(@Body body: RefreshData): AccessToken
+    fun refresh(@Body body: RefreshData): Call<AccessToken>
 
 }
