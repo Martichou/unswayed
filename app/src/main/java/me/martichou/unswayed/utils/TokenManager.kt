@@ -1,7 +1,7 @@
 package me.martichou.unswayed.utils
 
 import android.content.SharedPreferences
-import me.martichou.unswayed.models.AccessToken
+import me.martichou.unswayed.models.retrofit.AccessToken
 
 class TokenManager constructor(prefs: SharedPreferences) {
 
@@ -23,12 +23,13 @@ class TokenManager constructor(prefs: SharedPreferences) {
         editor.putString("ACCESS_TOKEN", token.accessToken).commit()
         editor.putString("REFRESH_TOKEN", token.refreshToken).commit()
         editor.putString("EXPIRE_AT", token.expireAt).commit()
-        this@TokenManager.token = AccessToken(
-            tokenType = token.tokenType,
-            accessToken = token.accessToken,
-            refreshToken = token.refreshToken,
-            expireAt = token.expireAt
-        )
+        this@TokenManager.token =
+            AccessToken(
+                tokenType = token.tokenType,
+                accessToken = token.accessToken,
+                refreshToken = token.refreshToken,
+                expireAt = token.expireAt
+            )
     }
 
     fun deleteToken() {

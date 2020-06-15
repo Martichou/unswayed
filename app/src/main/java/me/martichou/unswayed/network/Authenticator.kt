@@ -1,6 +1,6 @@
 package me.martichou.unswayed.network
 
-import me.martichou.unswayed.models.RefreshData
+import me.martichou.unswayed.models.retrofit.RefreshData
 import me.martichou.unswayed.utils.SingletonHolder
 import me.martichou.unswayed.utils.TokenManager
 import okhttp3.Authenticator
@@ -16,7 +16,11 @@ class Authenticator constructor(private val tokenManager: TokenManager) : Authen
         }
 
         val authService = RetrofitBuilder.authService
-        val resp = authService.refresh(RefreshData(tokenManager.token?.refreshToken)).execute()
+        val resp = authService.refresh(
+            RefreshData(
+                tokenManager.token?.refreshToken
+            )
+        ).execute()
 
         return if (resp.isSuccessful) {
             resp.body()?.let {

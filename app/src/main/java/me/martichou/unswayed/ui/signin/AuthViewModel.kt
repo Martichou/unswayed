@@ -3,7 +3,7 @@ package me.martichou.unswayed.ui.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
-import me.martichou.unswayed.models.LoginData
+import me.martichou.unswayed.models.retrofit.LoginData
 import me.martichou.unswayed.network.AuthService
 import me.martichou.unswayed.utils.Resource
 

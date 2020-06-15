@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import me.martichou.unswayed.MainActivity
 import me.martichou.unswayed.databinding.SigninTwoFragmentBinding
-import me.martichou.unswayed.models.LoginData
+import me.martichou.unswayed.models.retrofit.LoginData
 import me.martichou.unswayed.network.RetrofitBuilder
 import me.martichou.unswayed.utils.Status
 import me.martichou.unswayed.utils.TokenManager
@@ -59,7 +59,12 @@ class SigninTwoFragment : Fragment() {
             binding.passwordValue.error = "Cannot be blank"
             return
         }
-        viewModel.perform(LoginData(email!!, binding.passwordValue.text.toString()))
+        viewModel.perform(
+            LoginData(
+                email!!,
+                binding.passwordValue.text.toString()
+            )
+        )
             .observe(this@SigninTwoFragment, Observer {
                 it?.let { resource ->
                     when (resource.status) {

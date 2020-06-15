@@ -1,4 +1,4 @@
-package me.martichou.unswayed.models
+package me.martichou.unswayed.models.retrofit
 
 class LoginData(
     var email: String,

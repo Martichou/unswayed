@@ -1,8 +1,8 @@
 package me.martichou.unswayed.network
 
-import me.martichou.unswayed.models.AccessToken
-import me.martichou.unswayed.models.LoginData
-import me.martichou.unswayed.models.RefreshData
+import me.martichou.unswayed.models.retrofit.AccessToken
+import me.martichou.unswayed.models.retrofit.LoginData
+import me.martichou.unswayed.models.retrofit.RefreshData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST

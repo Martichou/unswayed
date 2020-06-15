@@ -1,6 +1,6 @@
 package me.martichou.unswayed.network
 
-import me.martichou.unswayed.models.MeInfo
+import me.martichou.unswayed.models.retrofit.MeInfo
 import retrofit2.Call
 import retrofit2.http.GET
 
