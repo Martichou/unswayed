@@ -29,13 +29,14 @@ class MainFragment : Fragment() {
     private lateinit var binding: MainFragmentBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var mtracker: SelectionTracker<Long>
+    private lateinit var adapter: ImagesAdapter
     private var actionMode: ActionMode? = null
-    private val adapter = ImagesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        adapter = ImagesAdapter()
         binding = MainFragmentBinding.inflate(inflater, container, false)
         binding.mainRecyclerview.adapter = adapter
         val gridLayoutManager = GridLayoutManager(context, 4)
@@ -46,6 +47,11 @@ class MainFragment : Fragment() {
         }
         binding.mainRecyclerview.addItemDecoration(SpacingDecorator(toDP(2f, resources).toInt()))
         binding.mainRecyclerview.layoutManager = gridLayoutManager
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mtracker = SelectionTracker.Builder(
             "mySelection",
             binding.mainRecyclerview,
@@ -56,11 +62,6 @@ class MainFragment : Fragment() {
             SelectionPredicates.createSelectAnything()
         ).build()
         adapter.tracker = mtracker
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         adapter.submitList(getAllImages())
     }
 
@@ -122,24 +123,23 @@ class MainFragment : Fragment() {
             }
         }
 
-        mtracker.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
-                override fun onSelectionChanged() {
-                    super.onSelectionChanged()
-                    val items = mtracker.selection.size()
-                    if (items > 0) {
-                        if (actionMode == null) {
-                            actionMode =
-                                (activity as AppCompatActivity).startSupportActionMode(callback)
-                                    .apply { this?.title = items.toString() }
-                        } else {
-                            actionMode?.title = items.toString()
-                        }
+        mtracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+            override fun onSelectionChanged() {
+                super.onSelectionChanged()
+                val items = mtracker.selection.size()
+                if (items > 0) {
+                    if (actionMode == null) {
+                        actionMode =
+                            (activity as AppCompatActivity).startSupportActionMode(callback)
+                                .apply { this?.title = items.toString() }
                     } else {
-                        actionMode?.finish()
+                        actionMode?.title = items.toString()
                     }
+                } else {
+                    actionMode?.finish()
                 }
-            })
+            }
+        })
     }
 
     private fun getAllImages(): MutableList<GeneralItem> {
