@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="hdl"
+            type="me.martichou.unswayed.ui.dialog.SettingsPopup" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,6 +94,7 @@
             app:layout_constraintTop_toBottomOf="@id/profilePic" />
 
         <LinearLayout
+            android:id="@+id/settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
@@ -94,6 +102,7 @@
             android:focusable="true"
             android:orientation="horizontal"
             android:theme="@style/MyRipple"
+            android:onClick="@{hdl::settings}"
             app:layout_constraintTop_toBottomOf="@id/fiv">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -113,6 +122,40 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:text="Settings of Unswayed Photos"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:theme="@style/MyRipple"
+            android:onClick="@{hdl::logout}"
+            app:layout_constraintTop_toBottomOf="@id/settings">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="8dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:padding="16dp"
+                android:src="@drawable/ic_baseline_logout_24"
+                android:tint="@color/textSecondary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="Disconnect"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
 

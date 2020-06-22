@@ -1,5 +1,7 @@
 package me.martichou.unswayed.ui.dialog
 
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,8 +12,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import me.martichou.unswayed.AuthActivity
 import me.martichou.unswayed.R
 import me.martichou.unswayed.databinding.SettingsDialogBinding
+import me.martichou.unswayed.utils.TokenManager
 import me.martichou.unswayed.utils.toDP
 
 class SettingsPopup : DialogFragment() {
@@ -28,7 +35,9 @@ class SettingsPopup : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = SettingsDialogBinding.inflate(inflater, container, false)
+        binding = SettingsDialogBinding.inflate(inflater, container, false).apply {
+            hdl = this@SettingsPopup
+        }
         binding.closing.setOnClickListener {
             dialog?.dismiss()
         }
@@ -51,6 +60,23 @@ class SettingsPopup : DialogFragment() {
             .thumbnail(0.1f)
             .error(R.drawable.placeholder)
             .into(binding.profilePic)
+    }
+
+    fun View.settings() {
+        // TODO
+    }
+
+    fun View.logout() {
+        TokenManager.getInstance(context.getSharedPreferences("prefs", MODE_PRIVATE)).deleteToken()
+        // Do this better
+        CoroutineScope(Dispatchers.IO).launch {
+            Glide.get(context).clearDiskCache()
+        }
+        Glide.get(context).clearMemory()
+        // Goto Auth
+        startActivity(Intent(context, AuthActivity::class.java)).also {
+            activity?.finish()
+        }
     }
 
 }
