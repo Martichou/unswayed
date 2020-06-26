@@ -100,9 +100,9 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{hdl::settings}"
             android:orientation="horizontal"
             android:theme="@style/MyRipple"
-            android:onClick="@{hdl::settings}"
             app:layout_constraintTop_toBottomOf="@id/fiv">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -134,9 +134,9 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{hdl::logout}"
             android:orientation="horizontal"
             android:theme="@style/MyRipple"
-            android:onClick="@{hdl::logout}"
             app:layout_constraintTop_toBottomOf="@id/settings">
 
             <androidx.appcompat.widget.AppCompatImageView

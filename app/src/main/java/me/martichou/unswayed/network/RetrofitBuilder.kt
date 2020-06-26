@@ -10,7 +10,7 @@ object RetrofitBuilder {
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.67:8080/")
+            .baseUrl("http://172.104.249.116:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
@@ -33,13 +33,13 @@ object RetrofitBuilder {
             }.authenticator(Authenticator.getInstance(tokenManager)).build()
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.27:8080/")
+            .baseUrl("http://172.104.249.116:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
     }
 
-    fun restrictedService(tokenManager: TokenManager) : RestrictedService {
+    fun restrictedService(tokenManager: TokenManager): RestrictedService {
         return getRetrofitAuth(tokenManager).create(RestrictedService::class.java)
     }
 }

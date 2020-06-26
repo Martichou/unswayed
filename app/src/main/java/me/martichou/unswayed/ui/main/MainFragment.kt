@@ -53,15 +53,17 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mtracker = SelectionTracker.Builder(
-            "mySelection",
-            binding.mainRecyclerview,
+            "mySelection", binding.mainRecyclerview,
             StableIdKeyProvider(binding.mainRecyclerview),
-            MainItemDetailsLookup(binding.mainRecyclerview),
-            StorageStrategy.createLongStorage()
+            MainItemDetailsLookup(binding.mainRecyclerview), StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
         ).build()
         adapter.tracker = mtracker
+        // TODO replace this by image backedUp
+        // note: fetch from a local db the img url of the image which will be fetched by glide
+        // and cached by glide as well. Need to see if this work as intended to avoid
+        // call to the network everytime. It would be a mess if it does.
         adapter.submitList(getAllImages())
     }
 
@@ -69,6 +71,8 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        // TODO - Improve this part
+        // callback of the selection menu toolbar
         val callback = object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                 mode?.menuInflater?.inflate(R.menu.contextual_main, menu)
@@ -77,24 +81,24 @@ class MainFragment : Fragment() {
 
             override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                actionMode?.finish()
                 return when (item?.itemId) {
                     R.id.share -> {
-                        // Share...
                         // TODO - Using idk which trick to download then use the uri of the downloaded image
+                        // Only if it was on remote.
                         startActivity(Intent.createChooser(Intent().apply {
                             action = Intent.ACTION_SEND_MULTIPLE
                             putParcelableArrayListExtra(
                                 Intent.EXTRA_STREAM,
                                 ArrayList(mtracker.selection.mapNotNull { adapter.getItemAt(it.toInt())?.imgUri })
                             )
-                            // All type cause it's possible we endup with video as well
                             type = "*/*"
                             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                         }, "Share"))
                         true
                     }
                     R.id.download -> {
-                        // Download to local storage
+                        // Download to local storage if not already stored locally
                         true
                     }
                     R.id.dustbin -> {
@@ -123,25 +127,30 @@ class MainFragment : Fragment() {
             }
         }
 
+        // TODO - deplace this to another function for refactoring
         mtracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
                 val items = mtracker.selection.size()
-                if (items > 0) {
-                    if (actionMode == null) {
-                        actionMode =
-                            (activity as AppCompatActivity).startSupportActionMode(callback)
-                                .apply { this?.title = items.toString() }
-                    } else {
-                        actionMode?.title = items.toString()
-                    }
-                } else {
+                if (items <= 0) {
                     actionMode?.finish()
+                    return
+                }
+                actionMode?.title = items.toString()
+                if (actionMode == null) {
+                    actionMode =
+                        (activity as AppCompatActivity).startSupportActionMode(callback).apply {
+                            this?.title = items.toString()
+                        }
                 }
             }
         })
     }
 
+    // TODO - This function will go to somewhere else
+    // note: only get the image from the folder we want to get (those synced)
+    // Do this async and add them to the adapter list once it's done
+    // the adapter's data will be a LiveData or a Flow which will update the view automatically
     private fun getAllImages(): MutableList<GeneralItem> {
         val listOfAllImages: MutableList<GeneralItem> = mutableListOf()
         val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
