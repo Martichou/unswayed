@@ -2,22 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/main_fragment">
+    app:startDestination="@+id/home_fragment">
 
     <fragment
-        android:id="@+id/main_fragment"
-        android:name="me.martichou.unswayed.ui.main.MainFragment"
+        android:id="@+id/home_fragment"
+        android:name="me.martichou.unswayedphotos.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/main_fragment" />
-
-    <fragment
-        android:id="@+id/folder_fragment"
-        android:name="me.martichou.unswayed.ui.folder.FolderFragment"
-        android:label="Folder"
-        tools:layout="@layout/folder_fragment" />
+        tools:layout="@layout/home_fragment" />
 
     <dialog
-        android:id="@+id/profileSettings"
-        android:name="me.martichou.unswayed.ui.dialog.SettingsPopup"
+        android:id="@+id/settings_dialog"
+        android:name="me.martichou.unswayedphotos.ui.settings.SettingsDialog"
         tools:layout="@layout/settings_dialog" />
+
 </navigation>

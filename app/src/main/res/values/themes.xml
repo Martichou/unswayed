@@ -1,51 +1,26 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Unswayed" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Unswayedphotos" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teel_200</item>
-        <item name="colorSecondaryVariant">@color/teel_700</item>
+        <item name="colorSecondaryVariant">@color/teel_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="colorAccent">@color/tint</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowBackground">@color/backgroundColor</item>
-        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/floatingBgColor</item>
-        <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
-    </style>
-
-    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/textPrimary</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@drawable/splashscreen</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
-    </style>
-
-    <style name="Base.Widget.AppCompat.ActionMode" parent="">
-        <item name="background">?attr/actionModeBackground</item>
-        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
-    </style>
-
-    <style name="SettingsPopup" parent="Theme.MaterialComponents.Dialog">
-        <item name="android:windowMinWidthMajor">90%</item>
-        <item name="android:windowMinWidthMinor">90%</item>
-    </style>
-
-    <style name="MyRipple">
-        <item name="colorControlHighlight">@color/lightlightshadow</item>
     </style>
 
     <style name="AuthScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -68,6 +43,11 @@
 
     <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
         <item name="colorControlActivated">@color/tint</item>
+    </style>
+
+    <style name="SettingsDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
 </resources>

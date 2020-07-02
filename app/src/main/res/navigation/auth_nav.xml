@@ -2,38 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_auth"
-    app:startDestination="@id/signin_fragment">
+    app:startDestination="@id/email_fragment">
 
     <fragment
-        android:id="@+id/signin_fragment"
-        android:name="me.martichou.unswayed.ui.signin.SigninFragment"
-        tools:layout="@layout/signin_fragment">
-        <action
-            android:id="@+id/gotoSignup"
-            app:destination="@id/signup_fragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_none_anim"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_exit_none_anim"
-            app:popUpTo="@id/signin_fragment"
-            app:popUpToInclusive="true" />
+        android:id="@+id/email_fragment"
+        android:name="me.martichou.unswayedphotos.ui.login.EmailFragment"
+        tools:layout="@layout/email_fragment">
+
         <action
             android:id="@+id/gotoNext"
-            app:destination="@id/signin_two_fragment"
+            app:destination="@id/password_fragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/signin_two_fragment"
-        android:name="me.martichou.unswayed.ui.signin.SigninTwoFragment"
-        tools:layout="@layout/signin_two_fragment">
+        android:id="@+id/password_fragment"
+        android:name="me.martichou.unswayedphotos.ui.login.PasswordFragment"
+        tools:layout="@layout/password_fragment">
+
         <argument
             android:name="email"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="false" />
+
     </fragment>
 
 </navigation>

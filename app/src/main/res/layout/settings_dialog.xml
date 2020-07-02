@@ -7,7 +7,7 @@
 
         <variable
             name="hdl"
-            type="me.martichou.unswayed.ui.dialog.SettingsPopup" />
+            type="me.martichou.unswayedphotos.ui.settings.SettingsDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,8 +26,8 @@
             android:focusable="true"
             android:padding="4dp"
             android:src="@drawable/ic_baseline_close_24"
-            android:theme="@style/MyRipple"
             android:tint="@color/textSecondary"
+            android:onClick="@{hdl::close}"
             app:layout_constraintBottom_toBottomOf="@id/trademark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/trademark" />
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/profilePic"
+            android:id="@+id/profileImage"
             android:layout_width="?actionBarSize"
             android:layout_height="?actionBarSize"
             android:layout_marginStart="8dp"
@@ -59,10 +59,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@id/profilePic"
+            app:layout_constraintBottom_toBottomOf="@id/profileImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/profilePic"
-            app:layout_constraintTop_toTopOf="@id/profilePic">
+            app:layout_constraintStart_toEndOf="@id/profileImage"
+            app:layout_constraintTop_toTopOf="@id/profileImage">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
             android:layout_height="0.5dp"
             android:layout_marginTop="16dp"
             android:background="@color/lightlightshadow"
-            app:layout_constraintTop_toBottomOf="@id/profilePic" />
+            app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
         <LinearLayout
             android:id="@+id/settings"
@@ -100,9 +100,8 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{hdl::settings}"
+            android:onClick="@{hdl::gotoSettings}"
             android:orientation="horizontal"
-            android:theme="@style/MyRipple"
             app:layout_constraintTop_toBottomOf="@id/fiv">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -136,7 +135,6 @@
             android:focusable="true"
             android:onClick="@{hdl::logout}"
             android:orientation="horizontal"
-            android:theme="@style/MyRipple"
             app:layout_constraintTop_toBottomOf="@id/settings">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -146,7 +144,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:padding="16dp"
-                android:src="@drawable/ic_baseline_logout_24"
+                android:src="@drawable/ic_baseline_exit_to_app_24"
                 android:tint="@color/textSecondary" />
 
             <androidx.appcompat.widget.AppCompatTextView
