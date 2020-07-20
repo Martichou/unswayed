@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.CoroutineScope
@@ -74,7 +75,7 @@ class SettingsDialog : DialogFragment(), Injectable {
     }
 
     fun View.gotoSettings() {
-
+        findNavController().navigate(R.id.settings_activity)
     }
 
     fun View.logout() {

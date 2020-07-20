@@ -15,4 +15,9 @@
         android:name="me.martichou.unswayedphotos.ui.settings.SettingsDialog"
         tools:layout="@layout/settings_dialog" />
 
+    <activity
+        android:id="@+id/settings_activity"
+        android:name="me.martichou.unswayedphotos.ui.settings.SettingsActivity"
+        tools:layout="@layout/settings_activity"/>
+
 </navigation>
