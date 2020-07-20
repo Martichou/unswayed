@@ -55,7 +55,7 @@ class PasswordFragment : Fragment(), Injectable {
 
     fun View.processConnection() {
         if (binding.passwordValue.text.isNullOrEmpty()) {
-            binding.passwordValue.error = "This field cannot be empty"
+            binding.passwordTextInput.error = "This field cannot be empty"
             return
         }
         viewModel.processConnection(

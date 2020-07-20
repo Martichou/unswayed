@@ -27,8 +27,8 @@ class EmailFragment : Fragment() {
 
     fun View.gotoPwd() {
         val email = binding.emailValue.text.toString()
-        if (!email.isaValidEmail()) {
-            binding.emailValue.error = "Invalid Email"
+        if (email.isEmpty() || !email.isaValidEmail()) {
+            binding.emailTextInput.error = "Invalid Email"
             return
         }
         findNavController().navigate(EmailFragmentDirections.gotoNext(email))
