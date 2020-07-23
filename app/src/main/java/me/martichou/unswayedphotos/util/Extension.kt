@@ -3,6 +3,7 @@ package me.martichou.unswayedphotos.util
 import android.content.res.Resources
 import android.util.TypedValue
 import timber.log.Timber
+import java.security.MessageDigest
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -42,3 +43,12 @@ fun Two.toStringNameAndDate(): String? {
     val formatter: DateFormat = SimpleDateFormat("d-MMM-yyyy,HH:mm:ss", Locale.ENGLISH)
     return this.d1 + "^:^" + formatter.format(this.d2)
 }
+
+fun String.toBytes(): ByteArray {
+    return this.toByteArray(Charsets.UTF_8)
+}
+
+fun String.toSha512(): String {
+    return HashUtils.sha512(this)
+}
+

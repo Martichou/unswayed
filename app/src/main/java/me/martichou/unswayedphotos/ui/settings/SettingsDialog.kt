@@ -16,12 +16,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.databinding.SettingsDialogBinding
 import me.martichou.unswayedphotos.di.Injectable
 import me.martichou.unswayedphotos.ui.AuthActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toDp
+import java.security.KeyStore
 import javax.inject.Inject
 
 class SettingsDialog : DialogFragment(), Injectable {
@@ -31,6 +33,9 @@ class SettingsDialog : DialogFragment(), Injectable {
 
     @Inject
     lateinit var tokenManager: TokenManager
+
+    @Inject
+    lateinit var keyStore: KeyStore
 
     private lateinit var binding: SettingsDialogBinding
 
@@ -80,13 +85,16 @@ class SettingsDialog : DialogFragment(), Injectable {
 
     fun View.logout() {
         CoroutineScope(Dispatchers.IO).launch {
+            keyStore.deleteEntry("aesKey")
             tokenManager.deleteToken()
             Glide.get(context).clearDiskCache()
-        }
-        Glide.get(context).clearMemory()
-        sharedPreferences.edit().remove("user_email").apply()
-        startActivity(Intent(context, AuthActivity::class.java)).also {
-            activity?.finish()
+            sharedPreferences.edit().remove("user_email").apply()
+            withContext(Dispatchers.Main) {
+                Glide.get(context).clearMemory()
+                startActivity(Intent(context, AuthActivity::class.java)).also {
+                    activity?.finish()
+                }
+            }
         }
     }
 

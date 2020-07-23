@@ -12,6 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.model.api.CredentialsData
 import me.martichou.unswayedphotos.databinding.PasswordFragmentBinding
@@ -19,6 +23,8 @@ import me.martichou.unswayedphotos.di.Injectable
 import me.martichou.unswayedphotos.di.injectViewModel
 import me.martichou.unswayedphotos.ui.MainActivity
 import me.martichou.unswayedphotos.util.TokenManager
+import me.martichou.unswayedphotos.util.toBytes
+import me.martichou.unswayedphotos.util.toSha512
 import javax.inject.Inject
 
 class PasswordFragment : Fragment(), Injectable {
@@ -58,11 +64,10 @@ class PasswordFragment : Fragment(), Injectable {
             binding.passwordTextInput.error = "This field cannot be empty"
             return
         }
+        val pswdEE = binding.passwordValue.text.toString().toSha512()
+        val emailEE = args.email.toSha512().toBytes()
         viewModel.processConnection(
-            CredentialsData(
-                args.email,
-                binding.passwordValue.text.toString()
-            )
+            CredentialsData(args.email, pswdEE)
         ).observe(viewLifecycleOwner, Observer { result ->
             when (result.status) {
                 Result.Status.SUCCESS -> {
@@ -71,13 +76,19 @@ class PasswordFragment : Fragment(), Injectable {
                             .show()
                         return@Observer
                     }
-                    tokenManager.saveToken(result.data)
-                    sharedPreferences.edit().putString("user_email", args.email).apply()
-                    startActivity(Intent(context, MainActivity::class.java))
-                        .apply { activity?.finish() }
+                    Snackbar.make(binding.root, "Generating secret...", Snackbar.LENGTH_SHORT).show()
+                    CoroutineScope(Dispatchers.Default).launch {
+                        viewModel.generateAndSaveAes(emailEE, pswdEE)
+                        tokenManager.saveToken(result.data)
+                        sharedPreferences.edit().putString("user_email", args.email).apply()
+                        withContext(Dispatchers.Main) {
+                            startActivity(Intent(context, MainActivity::class.java))
+                                .apply { activity?.finish() }
+                        }
+                    }
                 }
                 Result.Status.LOADING -> {
-                    Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_SHORT).show()
                 }
                 Result.Status.ERROR -> {
                     Snackbar.make(binding.root, result.message!!, Snackbar.LENGTH_LONG).show()

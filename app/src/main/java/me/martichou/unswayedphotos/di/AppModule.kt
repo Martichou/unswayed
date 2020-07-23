@@ -12,6 +12,7 @@ import me.martichou.unswayedphotos.data.room.AppDatabase
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.security.KeyStore
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class, CoreDataModule::class])
@@ -42,6 +43,10 @@ class AppModule {
     @CoroutineScropeIO
     @Provides
     fun provideCoroutineScopeIO() = CoroutineScope(Dispatchers.IO)
+
+    @Singleton
+    @Provides
+    fun provideKeyStore() = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl("http://172.104.249.116:8080/")
