@@ -2,6 +2,7 @@ package me.martichou.unswayedphotos.util
 
 import android.content.res.Resources
 import android.util.TypedValue
+import me.martichou.unswayedphotos.data.model.room.ImageLocal
 import timber.log.Timber
 import java.security.MessageDigest
 import java.text.DateFormat
@@ -42,6 +43,11 @@ fun Two.toStringNameAndDate(): String? {
         return null
     val formatter: DateFormat = SimpleDateFormat("d-MMM-yyyy,HH:mm:ss", Locale.ENGLISH)
     return this.d1 + "^:^" + formatter.format(this.d2)
+}
+
+fun ImageLocal.toStringNameAndDate(): String {
+    val formatter: DateFormat = SimpleDateFormat("d-MMM-yyyy,HH:mm:ss", Locale.ENGLISH)
+    return this.imgName + "^:^" + formatter.format(this.imgDate)
 }
 
 fun String.toBytes(): ByteArray {
