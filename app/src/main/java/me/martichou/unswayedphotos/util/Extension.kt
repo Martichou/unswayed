@@ -1,15 +1,24 @@
 package me.martichou.unswayedphotos.util
 
+import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.BitmapFactory
 import android.util.TypedValue
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
 import timber.log.Timber
-import java.security.MessageDigest
+import java.io.File
+import java.io.FileOutputStream
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.math.ceil
+import kotlin.math.ln
+import kotlin.math.max
+import kotlin.math.pow
+
 
 fun String.isaValidEmail(): Boolean {
     return Pattern.compile("^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\\-.][a-z0-9]+)*\\.[a-z]{2,6})")
@@ -58,3 +67,42 @@ fun String.toSha512(): String {
     return HashUtils.sha512(this)
 }
 
+fun String.getCompressFormat(): CompressFormat {
+    return when (this) {
+        "image/jpeg" -> CompressFormat.JPEG
+        else -> CompressFormat.PNG
+    }
+}
+
+fun ImageLocal.createThumbnaill(context: Context): File? {
+    val fis = context.contentResolver.openInputStream(this.imgUri!!) ?: return null
+
+    val smallFile =
+        File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small")
+    val fosSmall = FileOutputStream(smallFile)
+
+    val o = BitmapFactory.Options().apply { this.inJustDecodeBounds = true }
+    BitmapFactory.decodeStream(fis, null, o)
+
+    val imageMaxSize = 1024
+    var scale = 1
+    if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
+        scale = 2.0.pow(ceil(ln(imageMaxSize / max(o.outHeight, o.outWidth).toDouble()) / ln(0.5)))
+            .toInt()
+    }
+
+    val o2 = BitmapFactory.Options().apply { this.inSampleSize = scale }
+    val bit = BitmapFactory.decodeStream(fis, null, o2)
+    bit?.compress(o.outMimeType.getCompressFormat(), 75, fosSmall)
+    fosSmall.flush()
+    fosSmall.close()
+    fis.close()
+
+    return smallFile
+}
+
+fun ImageLocal.thumbnailExists(context: Context): File? {
+    val tmpSmall =
+        File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small")
+    return if (tmpSmall.exists()) tmpSmall else null
+}

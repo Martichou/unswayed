@@ -5,6 +5,7 @@ import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProtection
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.security.Key
 import java.security.SecureRandom
@@ -34,35 +35,51 @@ fun ImageLocal.encrypt(
     context: Context,
     secretKey: Key,
     associatedData: ByteArray? = null
-): File? {
+): Two? {
+    if (imgUri == null) return null
+    // Original inputStream
+    val fis = context.contentResolver.openInputStream(imgUri) ?: return null
+    // Create thumbnail or get it, and set fisSmall
+    val fisSmall = FileInputStream(thumbnailExists(context) ?: createThumbnaill(context))
 
-    if (this.imgUri == null) return null
-    val fis = context.contentResolver.openInputStream(this.imgUri) ?: return null
-    val tmpFile = File(context.filesDir.absolutePath + File.separator + this.getUploadName())
-    val fos = FileOutputStream(tmpFile) // create a tmp file which will be uploaded later
+    // Output files
+    val tmpEncFile = File(context.cacheDir.absolutePath + File.separator + "tmpFile" + File.separator + getUploadName())
+    val tmpSmallEncFile = File(context.filesDir.absolutePath + File.separator + "tmpFile" + File.separator + getUploadName() + "_small")
 
-    val secureRandom = SecureRandom()
-    val iv = ByteArray(12) // new iv for each encryption
-    secureRandom.nextBytes(iv)
+    for (x in 0..1) {
+        if (x == 0 && tmpEncFile.exists()) {
+            fis.close()
+            continue
+        } else if (x == 1 && tmpSmallEncFile.exists()) {
+            fisSmall.close()
+            continue
+        }
 
-    val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-    val parameterSpec = GCMParameterSpec(128, iv) // 128 bit auth tag length
-    cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec)
+        val targetFos = if (x == 0) FileOutputStream(tmpEncFile) else FileOutputStream(tmpSmallEncFile)
+        val targetFis = if (x == 0) fis else fisSmall
 
-    associatedData?.let { cipher.updateAAD(it) }
+        val secureRandom = SecureRandom()
+        val iv = ByteArray(12) // new iv for each encryption
+        secureRandom.nextBytes(iv)
 
-    val cos = CipherOutputStream(fos, cipher)
-    var b: Int
-    val d = ByteArray(8)
-    while (fis.read(d).also { b = it } != -1) {
-        cos.write(d, 0, b)
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+        val parameterSpec = GCMParameterSpec(128, iv) // 128 bit auth tag length
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec)
+
+        associatedData?.let { cipher.updateAAD(it) }
+
+        val cos = CipherOutputStream(targetFos, cipher)
+        var b: Int
+        val d = ByteArray(8)
+        while (targetFis.read(d).also { b = it } != -1) {
+            cos.write(d, 0, b)
+        }
+        cos.flush()
+        cos.close()
+        targetFis.close()
+
+        Arrays.fill(iv, 0.toByte()) // overwrite the content of iv with zeros
     }
-    cos.flush()
-    cos.close()
-    fis.close()
 
-    Arrays.fill(iv, 0.toByte()) // overwrite the content of iv with zeros
-
-    return tmpFile
-
+    return Two(tmpEncFile, tmpSmallEncFile)
 }
