@@ -4,19 +4,15 @@ import android.content.Context
 import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProtection
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
-import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.security.Key
-import java.security.SecureRandom
 import java.security.spec.KeySpec
-import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.CipherOutputStream
 import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
@@ -41,7 +37,7 @@ fun ImageLocal.encrypt(
     // Original inputStream
     val fis = context.contentResolver.openInputStream(imgUri) ?: return null
     // Create thumbnail or get it, and set fisSmall
-    val fisSmall = FileInputStream(thumbnailExists(context) ?: createThumbnaill(context))
+    val fisSmall = FileInputStream(getThumbnail(context) ?: createThumbnaill(context))
 
     // Output files
 
