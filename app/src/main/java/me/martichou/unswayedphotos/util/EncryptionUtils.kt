@@ -4,6 +4,7 @@ import android.content.Context
 import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProtection
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -43,8 +44,14 @@ fun ImageLocal.encrypt(
     val fisSmall = FileInputStream(thumbnailExists(context) ?: createThumbnaill(context))
 
     // Output files
-    val tmpEncFile = File(context.cacheDir.absolutePath + File.separator + "tmpFile" + File.separator + getUploadName())
-    val tmpSmallEncFile = File(context.filesDir.absolutePath + File.separator + "tmpFile" + File.separator + getUploadName() + "_small")
+
+    val path = context.filesDir.path + File.separator + "tmpFiles" + File.separator
+
+    val dir = File(path)
+    if (!dir.exists()) dir.mkdir()
+
+    val tmpEncFile = File(path + getUploadName())
+    val tmpSmallEncFile = File(path + getUploadName() + "_small")
 
     for (x in 0..1) {
         if (x == 0 && tmpEncFile.exists()) {
@@ -58,27 +65,21 @@ fun ImageLocal.encrypt(
         val targetFos = if (x == 0) FileOutputStream(tmpEncFile) else FileOutputStream(tmpSmallEncFile)
         val targetFis = if (x == 0) fis else fisSmall
 
-        val secureRandom = SecureRandom()
-        val iv = ByteArray(12) // new iv for each encryption
-        secureRandom.nextBytes(iv)
-
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        val parameterSpec = GCMParameterSpec(128, iv) // 128 bit auth tag length
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
 
         associatedData?.let { cipher.updateAAD(it) }
 
         val cos = CipherOutputStream(targetFos, cipher)
         var b: Int
-        val d = ByteArray(8)
+        val d = ByteArray(1048576)
         while (targetFis.read(d).also { b = it } != -1) {
             cos.write(d, 0, b)
         }
         cos.flush()
         cos.close()
+        targetFos.close()
         targetFis.close()
-
-        Arrays.fill(iv, 0.toByte()) // overwrite the content of iv with zeros
     }
 
     return Two(tmpEncFile, tmpSmallEncFile)

@@ -9,6 +9,7 @@ import me.martichou.unswayedphotos.data.model.room.ImageLocal
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -74,29 +75,35 @@ fun String.getCompressFormat(): CompressFormat {
     }
 }
 
+// I need to open the file twice as I need to read it twice
+// TODO - Maybe there is some space for improvement here
 fun ImageLocal.createThumbnaill(context: Context): File? {
-    val fis = context.contentResolver.openInputStream(this.imgUri!!) ?: return null
+    if (imgUri == null) return null
+    val path = context.filesDir.path + File.separator + "thumbnails" + File.separator
 
-    val smallFile =
-        File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small")
+    val dir = File(path)
+    if (!dir.exists()) dir.mkdir()
+
+    val smallFile = File(path + this.getUploadName() + "_small")
     val fosSmall = FileOutputStream(smallFile)
 
+    var fis: InputStream = context.contentResolver.openInputStream(this.imgUri) ?: return null
     val o = BitmapFactory.Options().apply { this.inJustDecodeBounds = true }
-    BitmapFactory.decodeStream(fis, null, o)
+    BitmapFactory.decodeStream(fis, null, o).also { fis.close() }
 
-    val imageMaxSize = 1024
+    val imageMaxSize = 768
     var scale = 1
     if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
         scale = 2.0.pow(ceil(ln(imageMaxSize / max(o.outHeight, o.outWidth).toDouble()) / ln(0.5)))
             .toInt()
     }
 
+    fis = context.contentResolver.openInputStream(this.imgUri) ?: return null
     val o2 = BitmapFactory.Options().apply { this.inSampleSize = scale }
-    val bit = BitmapFactory.decodeStream(fis, null, o2)
-    bit?.compress(o.outMimeType.getCompressFormat(), 75, fosSmall)
+    val bit = BitmapFactory.decodeStream(fis, null, o2).also { fis.close() }
+    bit?.compress(o.outMimeType.getCompressFormat(), 95, fosSmall)
     fosSmall.flush()
     fosSmall.close()
-    fis.close()
 
     return smallFile
 }
