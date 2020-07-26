@@ -10,15 +10,13 @@ import java.util.*
 
 @Entity(tableName = "images")
 data class ImageLocal(
+    @PrimaryKey(autoGenerate = false)
+    val id: String,
     val imgName: String,
     val imgUri: Uri?,
     val imgDate: Date,
     val backed: Boolean
 ) : HomeGeneral() {
-
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-
     override val type: Int
         get() = TYPE_GENERAL
 
