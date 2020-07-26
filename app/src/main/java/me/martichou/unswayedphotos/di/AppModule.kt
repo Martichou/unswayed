@@ -49,14 +49,14 @@ class AppModule {
     fun provideKeyStore() = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
 
     private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("http://172.104.249.116:8080/")
+        return Retrofit.Builder().baseUrl("https://api.unswayed.app:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
 
     private fun createRetrofitAuth(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://172.104.249.116:8080/")
+            .baseUrl("https://api.unswayed.app:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
