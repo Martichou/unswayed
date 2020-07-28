@@ -1,4 +1,4 @@
-package me.martichou.unswayedphotos.ui
+package me.martichou.unswayedphotos
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

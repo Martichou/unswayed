@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import me.martichou.unswayedphotos.ui.AuthActivity
-import me.martichou.unswayedphotos.ui.MainActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import javax.inject.Inject
 

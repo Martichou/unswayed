@@ -1,4 +1,4 @@
-package me.martichou.unswayedphotos.ui
+package me.martichou.unswayedphotos
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -16,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.data.api.AuthService
 import me.martichou.unswayedphotos.databinding.MainActivityBinding
 import me.martichou.unswayedphotos.service.TestJob
