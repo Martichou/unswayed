@@ -44,11 +44,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideImageDao(db: AppDatabase) = db.imageDao()
+    fun provideImageDao(db: AppDatabase) = db.imageDaoAsync()
 
     @Singleton
     @Provides
-    fun provideSyncDao(db: AppDatabase) = db.syncDao()
+    fun provideSyncDao(db: AppDatabase) = db.imageDaoSync()
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl("https://api.unswayed.app:8080/")

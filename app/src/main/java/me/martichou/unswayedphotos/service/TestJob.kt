@@ -2,7 +2,6 @@ package me.martichou.unswayedphotos.service
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import dagger.android.AndroidInjection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.api.UserService
 import me.martichou.unswayedphotos.data.model.api.ReturnImageInfo
-import me.martichou.unswayedphotos.data.room.SyncDao
+import me.martichou.unswayedphotos.data.room.ImageDaoSync
 import me.martichou.unswayedphotos.util.encrypt
 import me.martichou.unswayedphotos.util.getImages
 import okhttp3.MediaType
@@ -30,7 +29,7 @@ class TestJob : JobService() {
     lateinit var userService: UserService
 
     @Inject
-    lateinit var dao: SyncDao
+    lateinit var dao: ImageDaoSync
 
     @Inject
     lateinit var keyStore: KeyStore

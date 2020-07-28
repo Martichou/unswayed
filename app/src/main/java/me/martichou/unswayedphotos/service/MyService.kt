@@ -7,14 +7,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import dagger.android.AndroidInjection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.data.model.api.ReturnImageInfo
-import me.martichou.unswayedphotos.data.room.SyncDao
+import me.martichou.unswayedphotos.data.room.ImageDaoSync
 import me.martichou.unswayedphotos.util.getImages
 import timber.log.Timber
 import java.util.*
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class MyService : Service() {
 
     @Inject
-    lateinit var dao: SyncDao
+    lateinit var dao: ImageDaoSync
 
     override fun onBind(intent: Intent?): IBinder? = null
 
