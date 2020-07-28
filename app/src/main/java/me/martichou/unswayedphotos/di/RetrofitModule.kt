@@ -2,6 +2,7 @@ package me.martichou.unswayedphotos.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import me.martichou.unswayedphotos.data.api.AuthService
@@ -13,22 +14,21 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 object RetrofitModule {
 
-    @Singleton
+    @Reusable
     @Provides
     fun provideUserService(okHttpClient: OkHttpClient) =
         provideServiceAuth(okHttpClient, UserService::class.java)
 
-    @Singleton
+    @Reusable
     @Provides
     fun provideAuthService() = provideService(AuthService::class.java)
 
-    @Singleton
+    @Reusable
     @Provides
     fun provideOkHttpClient(tokenManager: TokenManager, authService: AuthService): OkHttpClient {
         val tokenValue = tokenManager.token?.accessToken

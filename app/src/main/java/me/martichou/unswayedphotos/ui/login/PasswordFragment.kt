@@ -17,10 +17,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.martichou.unswayedphotos.MainActivity
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.model.api.CredentialsData
 import me.martichou.unswayedphotos.databinding.PasswordFragmentBinding
-import me.martichou.unswayedphotos.MainActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toBytes
 import me.martichou.unswayedphotos.util.toSha512

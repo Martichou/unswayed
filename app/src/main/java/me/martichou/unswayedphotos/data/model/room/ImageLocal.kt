@@ -1,7 +1,6 @@
 package me.martichou.unswayedphotos.data.model.room
 
 import android.net.Uri
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import me.martichou.unswayedphotos.data.model.recycler.HomeGeneral

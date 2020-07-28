@@ -24,10 +24,10 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{hdl::close}"
             android:padding="4dp"
             android:src="@drawable/ic_baseline_close_24"
             android:tint="@color/textSecondary"
-            android:onClick="@{hdl::close}"
             app:layout_constraintBottom_toBottomOf="@id/trademark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/trademark" />

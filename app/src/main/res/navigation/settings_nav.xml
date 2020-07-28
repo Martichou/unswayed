@@ -7,6 +7,6 @@
     <fragment
         android:id="@+id/settings_home"
         android:name="me.martichou.unswayedphotos.ui.settings.SettingsHomeFragment"
-        tools:layout="@layout/settings_home_fragment"/>
+        tools:layout="@layout/settings_home_fragment" />
 
 </navigation>

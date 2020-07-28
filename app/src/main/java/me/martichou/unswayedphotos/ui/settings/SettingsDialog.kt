@@ -18,9 +18,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.martichou.unswayedphotos.AuthActivity
 import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.databinding.SettingsDialogBinding
-import me.martichou.unswayedphotos.AuthActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toDp
 import java.security.KeyStore
