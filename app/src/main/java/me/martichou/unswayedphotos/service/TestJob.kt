@@ -3,6 +3,7 @@ package me.martichou.unswayedphotos.service
 import android.app.job.JobParameters
 import android.app.job.JobService
 import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,6 +23,7 @@ import java.security.KeyStore
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TestJob : JobService() {
 
     @Inject
@@ -34,11 +36,6 @@ class TestJob : JobService() {
     lateinit var keyStore: KeyStore
 
     private lateinit var job: Job
-
-    override fun onCreate() {
-        AndroidInjection.inject(this)
-        super.onCreate()
-    }
 
     override fun onStopJob(params: JobParameters?): Boolean {
         Timber.d("DBG: Job stopped before completion")

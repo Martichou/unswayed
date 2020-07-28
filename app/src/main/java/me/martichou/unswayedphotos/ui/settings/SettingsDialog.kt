@@ -13,20 +13,21 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.databinding.SettingsDialogBinding
-import me.martichou.unswayedphotos.di.Injectable
 import me.martichou.unswayedphotos.ui.AuthActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toDp
 import java.security.KeyStore
 import javax.inject.Inject
 
-class SettingsDialog : DialogFragment(), Injectable {
+@AndroidEntryPoint
+class SettingsDialog : DialogFragment() {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences

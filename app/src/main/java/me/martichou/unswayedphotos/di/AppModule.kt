@@ -2,10 +2,11 @@ package me.martichou.unswayedphotos.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import me.martichou.unswayedphotos.data.api.AuthService
 import me.martichou.unswayedphotos.data.api.UserService
 import me.martichou.unswayedphotos.data.room.AppDatabase
@@ -15,8 +16,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.security.KeyStore
 import javax.inject.Singleton
 
-@Module(includes = [ViewModelModule::class, CoreDataModule::class])
-class AppModule {
+@InstallIn(ApplicationComponent::class)
+@Module(includes = [CoreDataModule::class])
+object AppModule {
 
     @Singleton
     @Provides
@@ -29,6 +31,15 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideSharedPreference(app: Application): SharedPreferences =
+        app.getSharedPreferences("unswayed", Context.MODE_PRIVATE)
+
+    @Singleton
+    @Provides
+    fun provideKeyStore(): KeyStore = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
+
+    @Singleton
+    @Provides
     fun provideDb(app: Application) = AppDatabase.getInstance(app)
 
     @Singleton
@@ -37,20 +48,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreference(app: Application) =
-        app.getSharedPreferences("unswayed", Context.MODE_PRIVATE)
-
-    @CoroutineScropeIO
-    @Provides
-    fun provideCoroutineScopeIO() = CoroutineScope(Dispatchers.IO)
-
-    @Singleton
-    @Provides
     fun provideSyncDao(db: AppDatabase) = db.syncDao()
-
-    @Singleton
-    @Provides
-    fun provideKeyStore() = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl("https://api.unswayed.app:8080/")

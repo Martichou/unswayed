@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyService : Service() {
 
     @Inject
@@ -27,7 +29,6 @@ class MyService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
-        AndroidInjection.inject(this)
         super.onCreate()
         createNotificationChannel()
         startForeground(1919, notification)

@@ -2,6 +2,8 @@ package me.martichou.unswayedphotos.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import me.martichou.unswayedphotos.data.api.AuthService
 import me.martichou.unswayedphotos.data.api.Authenticator
 import me.martichou.unswayedphotos.util.TokenManager
@@ -9,8 +11,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
+@InstallIn(ApplicationComponent::class)
 @Module
-class CoreDataModule {
+object CoreDataModule {
+
     @Provides
     fun provideOkHttpClient(tokenManager: TokenManager, authService: AuthService): OkHttpClient {
         val tokenValue = tokenManager.token?.accessToken
@@ -28,4 +32,5 @@ class CoreDataModule {
                 chain.proceed(request)
             }.authenticator(Authenticator(tokenManager, authService)).build()
     }
+
 }
