@@ -7,7 +7,7 @@ import androidx.room.Query
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
 
 @Dao
-interface SyncDao {
+interface ImageDaoSync {
 
     @Query("SELECT * FROM images ORDER BY imgDate DESC")
     fun getImagesSync(): List<ImageLocal>

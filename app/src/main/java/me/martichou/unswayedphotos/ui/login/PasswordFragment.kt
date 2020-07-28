@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,18 +20,14 @@ import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.model.api.CredentialsData
 import me.martichou.unswayedphotos.databinding.PasswordFragmentBinding
-import me.martichou.unswayedphotos.di.Injectable
-import me.martichou.unswayedphotos.di.injectViewModel
-import me.martichou.unswayedphotos.ui.MainActivity
+import me.martichou.unswayedphotos.MainActivity
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toBytes
 import me.martichou.unswayedphotos.util.toSha512
 import javax.inject.Inject
 
-class PasswordFragment : Fragment(), Injectable {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+@AndroidEntryPoint
+class PasswordFragment : Fragment() {
 
     @Inject
     lateinit var tokenManager: TokenManager
@@ -39,8 +36,8 @@ class PasswordFragment : Fragment(), Injectable {
     lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var binding: PasswordFragmentBinding
-    private lateinit var viewModel: PasswordViewModel
 
+    private val viewModel: PasswordViewModel by viewModels()
     private val args: PasswordFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -50,7 +47,6 @@ class PasswordFragment : Fragment(), Injectable {
     ): View? {
         if (args.email.isEmpty())
             findNavController().popBackStack()
-        viewModel = injectViewModel(viewModelFactory)
         binding = PasswordFragmentBinding.inflate(inflater, container, false).apply {
             hdl = this@PasswordFragment
             who.text = args.email
@@ -76,7 +72,8 @@ class PasswordFragment : Fragment(), Injectable {
                             .show()
                         return@Observer
                     }
-                    Snackbar.make(binding.root, "Generating secret...", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Generating secret...", Snackbar.LENGTH_SHORT)
+                        .show()
                     CoroutineScope(Dispatchers.Default).launch {
                         viewModel.generateAndSaveAes(emailEE, pswdEE)
                         tokenManager.saveToken(result.data)

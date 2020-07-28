@@ -1,4 +1,4 @@
-package me.martichou.unswayedphotos.ui
+package me.martichou.unswayedphotos
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -8,17 +8,14 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import me.martichou.unswayedphotos.R
+import dagger.hilt.android.AndroidEntryPoint
 import me.martichou.unswayedphotos.data.api.AuthService
 import me.martichou.unswayedphotos.databinding.MainActivityBinding
 import me.martichou.unswayedphotos.service.TestJob
@@ -28,10 +25,8 @@ import me.martichou.unswayedphotos.util.TokenManager
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainActivity : FragmentActivity(), HasSupportFragmentInjector {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var authService: AuthService
@@ -44,8 +39,6 @@ class MainActivity : FragmentActivity(), HasSupportFragmentInjector {
 
     private lateinit var binding: MainActivityBinding
     private lateinit var navController: NavController
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

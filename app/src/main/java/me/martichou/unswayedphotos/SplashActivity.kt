@@ -1,16 +1,15 @@
 package me.martichou.unswayedphotos
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import me.martichou.unswayedphotos.di.Injectable
-import me.martichou.unswayedphotos.ui.AuthActivity
-import me.martichou.unswayedphotos.ui.MainActivity
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import me.martichou.unswayedphotos.util.TokenManager
 import javax.inject.Inject
 
-class SplashActivity : Activity(), Injectable {
+@AndroidEntryPoint
+class SplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var tokenManager: TokenManager

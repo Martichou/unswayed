@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import me.martichou.unswayedphotos.data.model.room.ImageLocal
-import me.martichou.unswayedphotos.ui.home.data.ImageDao
 
 /**
  * The Room database for this app
@@ -18,8 +17,8 @@ import me.martichou.unswayedphotos.ui.home.data.ImageDao
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun imageDao(): ImageDao
-    abstract fun syncDao(): SyncDao
+    abstract fun imageDaoAsync(): ImageDaoAsync
+    abstract fun imageDaoSync(): ImageDaoSync
 
     companion object {
 

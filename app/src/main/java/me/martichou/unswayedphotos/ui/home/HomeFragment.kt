@@ -5,35 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.databinding.HomeFragmentBinding
-import me.martichou.unswayedphotos.di.Injectable
-import me.martichou.unswayedphotos.di.injectViewModel
 import me.martichou.unswayedphotos.ui.home.adapter.HomeAdapter
 import timber.log.Timber
 import java.security.KeyStore
 import javax.inject.Inject
 
-class HomeFragment : Fragment(), Injectable {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+@AndroidEntryPoint
+class HomeFragment : Fragment() {
 
     @Inject
     lateinit var keyStore: KeyStore
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = injectViewModel(viewModelFactory)
-
         val binding = HomeFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
 

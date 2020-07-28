@@ -2,7 +2,7 @@ package me.martichou.unswayedphotos.service
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.api.UserService
 import me.martichou.unswayedphotos.data.model.api.ReturnImageInfo
-import me.martichou.unswayedphotos.data.room.SyncDao
+import me.martichou.unswayedphotos.data.room.ImageDaoSync
 import me.martichou.unswayedphotos.util.encrypt
 import me.martichou.unswayedphotos.util.getImages
 import okhttp3.MediaType
@@ -22,23 +22,19 @@ import java.security.KeyStore
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TestJob : JobService() {
 
     @Inject
     lateinit var userService: UserService
 
     @Inject
-    lateinit var dao: SyncDao
+    lateinit var dao: ImageDaoSync
 
     @Inject
     lateinit var keyStore: KeyStore
 
     private lateinit var job: Job
-
-    override fun onCreate() {
-        AndroidInjection.inject(this)
-        super.onCreate()
-    }
 
     override fun onStopJob(params: JobParameters?): Boolean {
         Timber.d("DBG: Job stopped before completion")

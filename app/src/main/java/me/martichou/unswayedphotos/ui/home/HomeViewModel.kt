@@ -1,10 +1,10 @@
 package me.martichou.unswayedphotos.ui.home
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import me.martichou.unswayedphotos.ui.home.data.ImageRepository
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(respository: ImageRepository) : ViewModel() {
+class HomeViewModel @ViewModelInject constructor(respository: ImageRepository) : ViewModel() {
 
     val imagesList = respository.images
 
