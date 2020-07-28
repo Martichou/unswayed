@@ -15,7 +15,7 @@ data class ImageLocal(
     val imgName: String,
     val imgUri: Uri?,
     val imgDate: Date,
-    val backed: Boolean
+    var backed: Boolean
 ) : HomeGeneral() {
     override val type: Int
         get() = TYPE_GENERAL

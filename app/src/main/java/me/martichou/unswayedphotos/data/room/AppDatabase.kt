@@ -19,6 +19,7 @@ import me.martichou.unswayedphotos.ui.home.data.ImageDao
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun imageDao(): ImageDao
+    abstract fun syncDao(): SyncDao
 
     companion object {
 

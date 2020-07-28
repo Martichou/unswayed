@@ -37,11 +37,11 @@ fun ImageLocal.encrypt(
     // Original inputStream
     val fis = context.contentResolver.openInputStream(imgUri) ?: return null
     // Create thumbnail or get it, and set fisSmall
-    val fisSmall = FileInputStream(getThumbnail(context) ?: createThumbnaill(context))
+    val fisSmall = FileInputStream(getThumbnail(context) ?: createThumbnail(context))
 
     // Output files
 
-    val path = context.filesDir.path + File.separator + "tmpFiles" + File.separator
+    val path = context.cacheDir.path + File.separator + "tmpFiles" + File.separator
 
     val dir = File(path)
     if (!dir.exists()) dir.mkdir()
@@ -58,7 +58,8 @@ fun ImageLocal.encrypt(
             continue
         }
 
-        val targetFos = if (x == 0) FileOutputStream(tmpEncFile) else FileOutputStream(tmpSmallEncFile)
+        val targetFos =
+            if (x == 0) FileOutputStream(tmpEncFile) else FileOutputStream(tmpSmallEncFile)
         val targetFis = if (x == 0) fis else fisSmall
 
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")

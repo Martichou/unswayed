@@ -12,9 +12,9 @@ import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.pow
 
-fun ImageLocal.createThumbnaill(context: Context): File? {
+fun ImageLocal.createThumbnail(context: Context): File? {
     if (imgUri == null) return null
-    val path = context.filesDir.path + File.separator + "thumbnails" + File.separator
+    val path = context.cacheDir.path + File.separator + "thumbnails" + File.separator
 
     val dir = File(path)
     if (!dir.exists()) dir.mkdir()
@@ -53,4 +53,8 @@ fun ImageLocal.getThumbnail(context: Context): File? {
 
 fun ImageLocal.thumbnailExists(context: Context): Boolean {
     return File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small").exists()
+}
+
+fun String.thumbnailExists(context: Context): Boolean {
+    return File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this).exists()
 }

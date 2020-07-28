@@ -46,6 +46,10 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideSyncDao(db: AppDatabase) = db.syncDao()
+
+    @Singleton
+    @Provides
     fun provideKeyStore() = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
 
     private fun createRetrofit(): Retrofit {
