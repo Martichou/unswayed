@@ -17,17 +17,8 @@ import java.security.KeyStore
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
-@Module(includes = [CoreDataModule::class])
+@Module
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideUserService(okHttpClient: OkHttpClient) =
-        provideServiceAuth(okHttpClient, UserService::class.java)
-
-    @Singleton
-    @Provides
-    fun provideAuthService() = provideService(AuthService::class.java)
 
     @Singleton
     @Provides
@@ -49,27 +40,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideSyncDao(db: AppDatabase) = db.imageDaoSync()
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("https://api.unswayed.app:8080/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-    }
-
-    private fun createRetrofitAuth(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://api.unswayed.app:8080/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-    }
-
-    private fun <T> provideService(clazz: Class<T>): T {
-        return createRetrofit().create(clazz)
-    }
-
-    private fun <T> provideServiceAuth(okHttpClient: OkHttpClient, clazz: Class<T>): T {
-        return createRetrofitAuth(okHttpClient).create(clazz)
-    }
 
 }
