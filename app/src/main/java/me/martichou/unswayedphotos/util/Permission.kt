@@ -3,9 +3,9 @@ package me.martichou.unswayedphotos.util
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 
 object Permission {
 
@@ -32,7 +32,7 @@ object Permission {
         )
     }
 
-    fun FragmentActivity.askPermissions() {
+    fun AppCompatActivity.askPermissions() {
         this.requestPermissions(
             arrayOf(
                 Manifest.permission.INTERNET,

@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
-
 fun String.isaValidEmail(): Boolean {
     return Pattern.compile("^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\\-.][a-z0-9]+)*\\.[a-z]{2,6})")
         .matcher(this).matches()
@@ -22,7 +21,7 @@ fun Float.toDp(resources: Resources): Float {
 
 data class Two(val d1: Any, val d2: Any)
 
-// "imagefile^:^date" => [imagefile, Date()]
+// "imagefile^@^date" => [imagefile, Date()]
 fun String.parseToNameAndDate(): Two? {
     val parts = this.split("^@^")
     if (parts.size != 2)
@@ -37,7 +36,7 @@ fun String.parseToNameAndDate(): Two? {
     return Two(parts[0], date as Any)
 }
 
-// "string", Date() => "string^:^Date()"
+// "string", Date() => "string^@^Date()"
 fun Two.toStringNameAndDate(): String? {
     if (!(this.d1 is String && this.d2 is Date))
         return null
@@ -45,6 +44,7 @@ fun Two.toStringNameAndDate(): String? {
     return this.d1 + "^@^" + formatter.format(this.d2)
 }
 
+// ImageLocal => "string^@^Date()"
 fun ImageLocal.toStringNameAndDate(): String {
     val formatter: DateFormat = SimpleDateFormat("d-MMM-yyyy#HH#mm#ss", Locale.ENGLISH)
     return this.imgName + "^@^" + formatter.format(this.imgDate)

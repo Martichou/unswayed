@@ -13,14 +13,9 @@ import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.databinding.HomeFragmentBinding
 import me.martichou.unswayedphotos.ui.home.adapter.HomeAdapter
 import timber.log.Timber
-import java.security.KeyStore
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-    @Inject
-    lateinit var keyStore: KeyStore
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -39,7 +34,6 @@ class HomeFragment : Fragment() {
                 return if (adapter.getItemViewType(position) == 1) 1 else 4
             }
         }
-        //binding.mainRecyclerview.addItemDecoration(HomeSpacingDecorator(2f.toDp(resources).toInt()))
         binding.mainRecyclerview.layoutManager = gridLayoutManager
         binding.mainRecyclerview.adapter = adapter
 

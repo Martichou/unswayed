@@ -1,12 +1,7 @@
 package me.martichou.unswayedphotos
 
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -16,23 +11,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import me.martichou.unswayedphotos.data.api.AuthService
 import me.martichou.unswayedphotos.databinding.MainActivityBinding
-import me.martichou.unswayedphotos.service.TestJob
 import me.martichou.unswayedphotos.util.Permission
 import me.martichou.unswayedphotos.util.Permission.askPermissions
-import me.martichou.unswayedphotos.util.TokenManager
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var authService: AuthService
-
-    @Inject
-    lateinit var tokenManager: TokenManager
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -48,7 +34,6 @@ class MainActivity : AppCompatActivity() {
             hdl = this@MainActivity
             bottomNav.setupWithNavController(navController)
         }
-        scheduleJob()
     }
 
     override fun onStart() {
@@ -87,21 +72,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun View.openDialog() = navController.navigate(R.id.settings_dialog)
-
-    private fun scheduleJob() {
-        val componentName = ComponentName(this, TestJob::class.java)
-        val info = JobInfo.Builder(191919, componentName)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-            .setPersisted(true)
-            .setPeriodic(DateUtils.MINUTE_IN_MILLIS * 15)
-            .build()
-        val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        if (jobScheduler.getPendingJob(191919) == info) {
-            Timber.d("DBG: The job is already running")
-            return
-        }
-        jobScheduler.schedule(info)
-        Timber.d("DBG: Job scheduled")
-    }
 
 }

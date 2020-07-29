@@ -50,11 +50,3 @@ fun ImageLocal.getThumbnail(context: Context): File? {
         File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small")
     return if (tmpSmall.exists()) tmpSmall else null
 }
-
-fun ImageLocal.thumbnailExists(context: Context): Boolean {
-    return File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small").exists()
-}
-
-fun String.thumbnailExists(context: Context): Boolean {
-    return File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this).exists()
-}

@@ -1,17 +1,12 @@
 package me.martichou.unswayedphotos.ui.home.data
 
-import android.app.Application
-import android.content.Intent
 import me.martichou.unswayedphotos.data.resultLiveData
 import me.martichou.unswayedphotos.data.room.ImageDaoAsync
-import me.martichou.unswayedphotos.service.MyService
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ImageRepository @Inject constructor(
-    private val appContext: Application,
     private val dao: ImageDaoAsync,
     private val remoteSource: ImageRemoteDataSource
 ) {
@@ -19,10 +14,7 @@ class ImageRepository @Inject constructor(
         databaseQuery = { dao.getImages() },
         networkCall = { remoteSource.fetchData() },
         saveCallResult = {
-            val intent = Intent(appContext, MyService::class.java).also { da ->
-                da.putParcelableArrayListExtra("list", it as ArrayList)
-            }
-            appContext.startForegroundService(intent)
+            // TODO
         }
     )
 }
