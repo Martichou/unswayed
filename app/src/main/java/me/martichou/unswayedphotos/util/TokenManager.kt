@@ -1,7 +1,7 @@
 package me.martichou.unswayedphotos.util
 
 import android.content.SharedPreferences
-import me.martichou.unswayedphotos.data.model.api.AccessToken
+import me.martichou.unswayedphotos.models.AccessToken
 import javax.inject.Inject
 
 class TokenManager @Inject constructor(prefs: SharedPreferences) {

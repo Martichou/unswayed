@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.Zimage
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -14,8 +14,8 @@ import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.CipherOutputStream
 
-fun getImages(context: Context, selectFolder: List<String>? = null): MutableList<ImageLocal> {
-    val listOfAllImages: MutableList<ImageLocal> = mutableListOf()
+fun getImages(context: Context, selectFolder: List<String>? = null): MutableList<Zimage> {
+    val listOfAllImages: MutableList<Zimage> = mutableListOf()
     val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         MediaStore.Images.Media._ID,
@@ -44,7 +44,7 @@ fun getImages(context: Context, selectFolder: List<String>? = null): MutableList
         val cNameID: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
         while (cursor.moveToNext()) {
             listOfAllImages.add(
-                ImageLocal(
+                Zimage(
                     id = Two(
                         cursor.getString(cNameID),
                         Date(cursor.getLong(cDateID) * 1000)
@@ -64,7 +64,7 @@ fun getImages(context: Context, selectFolder: List<String>? = null): MutableList
     return listOfAllImages
 }
 
-fun ImageLocal.encrypt(
+fun Zimage.encrypt(
     context: Context,
     secretKey: Key,
     associatedData: ByteArray? = null

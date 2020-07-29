@@ -1,4 +1,4 @@
-package me.martichou.unswayedphotos.data.model.api
+package me.martichou.unswayedphotos.models
 
 import com.squareup.moshi.Json
 

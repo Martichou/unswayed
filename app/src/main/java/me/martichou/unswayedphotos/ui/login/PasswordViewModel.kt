@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.data.api.AuthService
-import me.martichou.unswayedphotos.data.model.api.CredentialsData
+import me.martichou.unswayedphotos.models.LoginPayload
 import me.martichou.unswayedphotos.util.aesKeyProtection
 import me.martichou.unswayedphotos.util.generateAesKeyFromPassword
 import timber.log.Timber
@@ -17,7 +17,7 @@ class PasswordViewModel @ViewModelInject constructor(
     private val keyStore: KeyStore
 ) : ViewModel() {
 
-    fun processConnection(data: CredentialsData) = liveData(Dispatchers.IO) {
+    fun processConnection(data: LoginPayload) = liveData(Dispatchers.IO) {
         emit(Result.loading(data = null))
         try {
             emit(Result.success(authService.auth(data)))

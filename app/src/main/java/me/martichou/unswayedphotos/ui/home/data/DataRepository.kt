@@ -6,9 +6,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ImageRepository @Inject constructor(
+class DataRepository @Inject constructor(
     private val dao: ImageDaoAsync,
-    private val remoteSource: ImageRemoteDataSource
+    private val remoteSource: RemoteDataSource
 ) {
     val images = resultLiveData(
         databaseQuery = { dao.getImages() },

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.MainActivity
 import me.martichou.unswayedphotos.data.Result
-import me.martichou.unswayedphotos.data.model.api.CredentialsData
+import me.martichou.unswayedphotos.models.LoginPayload
 import me.martichou.unswayedphotos.databinding.PasswordFragmentBinding
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toBytes
@@ -63,7 +63,7 @@ class PasswordFragment : Fragment() {
         val pswdEE = binding.passwordValue.text.toString().toSha512()
         val emailEE = args.email.toSha512().toBytes()
         viewModel.processConnection(
-            CredentialsData(args.email, pswdEE)
+            LoginPayload(args.email, pswdEE)
         ).observe(viewLifecycleOwner, Observer { result ->
             when (result.status) {
                 Result.Status.SUCCESS -> {

@@ -5,13 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.Zimage
 
 /**
  * The Room database for this app
  */
 @Database(
-    entities = [ImageLocal::class],
+    entities = [Zimage::class],
     version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class)

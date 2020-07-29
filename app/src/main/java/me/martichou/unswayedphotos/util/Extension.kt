@@ -2,7 +2,7 @@ package me.martichou.unswayedphotos.util
 
 import android.content.res.Resources
 import android.util.TypedValue
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.Zimage
 import timber.log.Timber
 import java.text.DateFormat
 import java.text.ParseException
@@ -45,7 +45,7 @@ fun Two.toStringNameAndDate(): String? {
 }
 
 // ImageLocal => "string^@^Date()"
-fun ImageLocal.toStringNameAndDate(): String {
+fun Zimage.toStringNameAndDate(): String {
     val formatter: DateFormat = SimpleDateFormat("d-MMM-yyyy#HH#mm#ss", Locale.ENGLISH)
     return this.imgName + "^@^" + formatter.format(this.imgDate)
 }

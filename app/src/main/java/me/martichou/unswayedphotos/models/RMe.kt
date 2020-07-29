@@ -1,7 +1,7 @@
-package me.martichou.unswayedphotos.data.model.api
+package me.martichou.unswayedphotos.models
 
 import com.squareup.moshi.Json
 
-data class ReturnMe(
+data class RMe(
     @field:Json(name = "email") val email: String
 )

@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import me.martichou.unswayedphotos.R
 import me.martichou.unswayedphotos.data.Result
 import me.martichou.unswayedphotos.databinding.HomeFragmentBinding
 import me.martichou.unswayedphotos.ui.home.adapter.HomeAdapter

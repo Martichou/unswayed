@@ -4,15 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.Zimage
 
 @Dao
 interface ImageDaoSync {
 
     @Query("SELECT * FROM images ORDER BY imgDate DESC")
-    fun getImagesSync(): List<ImageLocal>
+    fun getImagesSync(): List<Zimage>
 
     @Insert(onConflict = REPLACE)
-    fun insertImage(imageLocal: ImageLocal)
+    fun insertImage(imageLocal: Zimage)
 
 }

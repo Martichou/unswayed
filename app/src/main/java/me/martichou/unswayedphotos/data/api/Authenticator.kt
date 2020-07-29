@@ -1,6 +1,6 @@
 package me.martichou.unswayedphotos.data.api
 
-import me.martichou.unswayedphotos.data.model.api.RefreshCredentials
+import me.martichou.unswayedphotos.models.RefreshPayload
 import me.martichou.unswayedphotos.util.TokenManager
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -19,7 +19,11 @@ class Authenticator @Inject constructor(
         }
 
         val resp = tokenManager.token?.let {
-            authService.refresh(RefreshCredentials(it.refreshToken)).execute()
+            authService.refresh(
+                RefreshPayload(
+                    it.refreshToken
+                )
+            ).execute()
         } ?: return null
 
         return if (resp.isSuccessful) {

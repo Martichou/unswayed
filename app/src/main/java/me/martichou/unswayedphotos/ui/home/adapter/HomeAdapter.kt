@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import me.martichou.unswayedphotos.data.model.recycler.HomeDate
-import me.martichou.unswayedphotos.data.model.recycler.HomeGeneral
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.rv.HomeDate
+import me.martichou.unswayedphotos.models.rv.HomeGeneral
+import me.martichou.unswayedphotos.models.Zimage
 import me.martichou.unswayedphotos.databinding.RvHomeDateBinding
 import me.martichou.unswayedphotos.databinding.RvHomeImageBinding
 import me.martichou.unswayedphotos.ui.home.viewholder.DateVH
@@ -40,7 +40,7 @@ class HomeAdapter : ListAdapter<HomeGeneral, RecyclerView.ViewHolder>(HomeDiff()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ImageVH) {
-            holder.bind(getItem(position) as ImageLocal)
+            holder.bind(getItem(position) as Zimage)
         } else if (holder is DateVH) {
             holder.bind(getItem(position) as HomeDate)
         }
@@ -59,9 +59,9 @@ class HomeAdapter : ListAdapter<HomeGeneral, RecyclerView.ViewHolder>(HomeDiff()
         }
 
         override fun areContentsTheSame(oldItem: HomeGeneral, newItem: HomeGeneral): Boolean {
-            return if (oldItem.type != newItem.type || ((oldItem is HomeDate && newItem is ImageLocal) || (oldItem is ImageLocal && newItem is HomeDate)))
+            return if (oldItem.type != newItem.type || ((oldItem is HomeDate && newItem is Zimage) || (oldItem is Zimage && newItem is HomeDate)))
                 false
-            else if (oldItem is ImageLocal && newItem is ImageLocal)
+            else if (oldItem is Zimage && newItem is Zimage)
                 oldItem.imgUri == newItem.imgUri
             else if (oldItem is HomeDate && newItem is HomeDate)
                 oldItem.date == newItem.date

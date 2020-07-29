@@ -3,7 +3,7 @@ package me.martichou.unswayedphotos.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import me.martichou.unswayedphotos.data.model.room.ImageLocal
+import me.martichou.unswayedphotos.models.Zimage
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -12,7 +12,7 @@ import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.pow
 
-fun ImageLocal.createThumbnail(context: Context): File? {
+fun Zimage.createThumbnail(context: Context): File? {
     if (imgUri == null) return null
     val path = context.cacheDir.path + File.separator + "thumbnails" + File.separator
 
@@ -45,7 +45,7 @@ fun ImageLocal.createThumbnail(context: Context): File? {
     return smallFile
 }
 
-fun ImageLocal.getThumbnail(context: Context): File? {
+fun Zimage.getThumbnail(context: Context): File? {
     val tmpSmall =
         File(context.filesDir.absolutePath + File.separator + "thumbnail" + File.separator + this.getUploadName() + "_small")
     return if (tmpSmall.exists()) tmpSmall else null

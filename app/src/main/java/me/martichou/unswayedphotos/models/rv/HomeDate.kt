@@ -1,4 +1,4 @@
-package me.martichou.unswayedphotos.data.model.recycler
+package me.martichou.unswayedphotos.models.rv
 
 import java.util.*
 

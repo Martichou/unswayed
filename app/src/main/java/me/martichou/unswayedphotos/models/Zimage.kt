@@ -1,14 +1,14 @@
-package me.martichou.unswayedphotos.data.model.room
+package me.martichou.unswayedphotos.models
 
 import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import me.martichou.unswayedphotos.data.model.recycler.HomeGeneral
+import me.martichou.unswayedphotos.models.rv.HomeGeneral
 import me.martichou.unswayedphotos.util.toStringNameAndDate
 import java.util.*
 
 @Entity(tableName = "images")
-data class ImageLocal(
+data class Zimage(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val imgName: String,
