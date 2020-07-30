@@ -18,12 +18,12 @@ class PasswordViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     fun processConnection(data: LoginPayload) = liveData(Dispatchers.IO) {
-        emit(Result.loading(data = null))
+        emit(Result.loading())
         try {
             emit(Result.success(authService.auth(data)))
         } catch (exception: Exception) {
             Timber.e(exception)
-            emit(Result.error(data = null, message = exception.message ?: "An error occured"))
+            emit(Result.error(message = exception.message ?: "An error occured"))
         }
     }
 

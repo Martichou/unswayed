@@ -13,6 +13,9 @@ interface ImageDaoSync {
     fun getImagesSync(): List<Zimage>
 
     @Insert(onConflict = REPLACE)
-    fun insertImage(imageLocal: Zimage)
+    fun insertImage(zimage: Zimage)
+
+    @Insert(onConflict = REPLACE)
+    fun insertBulkImages(zimages: List<Zimage>)
 
 }

@@ -19,11 +19,7 @@ class Authenticator @Inject constructor(
         }
 
         val resp = tokenManager.token?.let {
-            authService.refresh(
-                RefreshPayload(
-                    it.refreshToken
-                )
-            ).execute()
+            authService.refresh(RefreshPayload(it.refreshToken)).execute()
         } ?: return null
 
         return if (resp.isSuccessful) {

@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.martichou.unswayedphotos.MainActivity
 import me.martichou.unswayedphotos.data.Result
-import me.martichou.unswayedphotos.models.LoginPayload
 import me.martichou.unswayedphotos.databinding.PasswordFragmentBinding
+import me.martichou.unswayedphotos.models.LoginPayload
 import me.martichou.unswayedphotos.util.TokenManager
 import me.martichou.unswayedphotos.util.toBytes
 import me.martichou.unswayedphotos.util.toSha512

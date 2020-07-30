@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import me.martichou.unswayedphotos.models.rv.HomeDate
-import me.martichou.unswayedphotos.models.rv.HomeGeneral
-import me.martichou.unswayedphotos.models.Zimage
 import me.martichou.unswayedphotos.databinding.RvHomeDateBinding
 import me.martichou.unswayedphotos.databinding.RvHomeImageBinding
+import me.martichou.unswayedphotos.models.Zimage
+import me.martichou.unswayedphotos.models.rv.HomeDate
+import me.martichou.unswayedphotos.models.rv.HomeGeneral
 import me.martichou.unswayedphotos.ui.home.viewholder.DateVH
 import me.martichou.unswayedphotos.ui.home.viewholder.ImageVH
 
@@ -22,18 +22,10 @@ class HomeAdapter : ListAdapter<HomeGeneral, RecyclerView.ViewHolder>(HomeDiff()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> ImageVH(
-                RvHomeImageBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                RvHomeImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             else -> DateVH(
-                RvHomeDateBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                RvHomeDateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
         }
     }

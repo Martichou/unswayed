@@ -1,7 +1,7 @@
 package me.martichou.unswayedphotos.data.api
 
-import me.martichou.unswayedphotos.models.RMine
 import me.martichou.unswayedphotos.models.RMe
+import me.martichou.unswayedphotos.models.RMine
 import me.martichou.unswayedphotos.models.RUpload
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -16,11 +16,11 @@ interface UserService {
     suspend fun me(): RMe
 
     @GET("/api/users/mine")
-    suspend fun uploaded(): Response<List<RMine>>
+    suspend fun mine(): Response<List<RMine>>
 
     @Multipart
     @POST("/api/files/upload")
-    suspend fun uploadImage(
+    suspend fun upload(
         @Part fileFull: MultipartBody.Part,
         @Part fileThumbnail: MultipartBody.Part
     ): Response<List<RUpload>>
